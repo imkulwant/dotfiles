@@ -1,3 +1,4 @@
 # Ignore README, LICENSE, or other non-dotfile files
 README.md
 LICENSE
+.oh-my-zsh/cache/
