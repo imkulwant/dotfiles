@@ -1,11 +1,11 @@
 # Homebrew formulae
 brew "chezmoi"
+brew "zsh"
 brew "fzf"
 brew "jenv"
-brew "k9s"
-brew "maven"
 brew "openjdk@21"
-brew "zsh"
+brew "maven"
+brew "k9s"
 
 # Casks
 cask "firefox"
