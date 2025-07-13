@@ -1,0 +1,11 @@
+#!/bin/bash
+# Ensure zsh is installed and set as default shell
+if ! command -v zsh >/dev/null 2>&1; then
+  echo "Installing zsh..."
+  brew install zsh
+fi
+
+if [ "$SHELL" != "/bin/zsh" ]; then
+  echo "Changing default shell to zsh..."
+  chsh -s /bin/zsh
+fi

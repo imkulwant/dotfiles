@@ -1,0 +1,11 @@
+#!/bin/bash
+# Installs jenv and the Maven plugin.
+if ! command -v jenv >/dev/null 2>&1; then
+  echo "Installing jenv..."
+  brew install jenv
+fi
+
+if [ ! -d "$(jenv root)/plugins/maven" ]; then
+  echo "Installing jenv Maven plugin..."
+  jenv enable-plugin maven
+fi

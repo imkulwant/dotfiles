@@ -1,17 +1,20 @@
+# Homebrew formulae
 brew "chezmoi"
+brew "fzf"
 brew "jenv"
 brew "k9s"
 brew "maven"
-brew "mysql", restart_service: :changed
 brew "openjdk@21"
-brew "protobuf"
 brew "zsh"
+
+# Casks
 cask "firefox"
 cask "gcloud-cli"
 cask "intellij-idea"
 cask "iterm2"
 cask "postman"
 cask "visual-studio-code"
+
 vscode "redhat.java"
 vscode "visualstudioexptteam.intellicode-api-usage-examples"
 vscode "visualstudioexptteam.vscodeintellicode"
