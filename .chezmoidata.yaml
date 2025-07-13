@@ -1,0 +1,1 @@
+user: "{{ .chezmoi.user }}"

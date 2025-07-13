@@ -1,0 +1,5 @@
+#!/bin/bash
+JAVA_PATH="/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
+if [ -d "$JAVA_PATH" ]; then
+  jenv add "$JAVA_PATH"
+fi

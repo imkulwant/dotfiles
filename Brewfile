@@ -1,0 +1,26 @@
+# Homebrew formulae
+brew "chezmoi"
+brew "fzf"
+brew "jenv"
+brew "k9s"
+brew "maven"
+brew "openjdk@21"
+brew "zsh"
+
+# Casks
+cask "firefox"
+cask "gcloud-cli"
+cask "intellij-idea"
+cask "iterm2"
+cask "postman"
+cask "visual-studio-code"
+
+vscode "redhat.java"
+vscode "visualstudioexptteam.intellicode-api-usage-examples"
+vscode "visualstudioexptteam.vscodeintellicode"
+vscode "vscjava.vscode-gradle"
+vscode "vscjava.vscode-java-debug"
+vscode "vscjava.vscode-java-dependency"
+vscode "vscjava.vscode-java-pack"
+vscode "vscjava.vscode-java-test"
+vscode "vscjava.vscode-maven"

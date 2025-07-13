@@ -1,0 +1,3 @@
+# Ignore README, LICENSE, or other non-dotfile files
+README.md
+LICENSE
