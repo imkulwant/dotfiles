@@ -1,0 +1,70 @@
+# Status and log
+alias gs='git status -sb'                # Short status with branch info[4][1]
+alias gl='git log --oneline --graph --decorate --all'  # Visual log[4][2]
+alias gll='git log --oneline'            # Compact log[4]
+alias gco='git checkout'                 # Checkout branch[5]
+alias gcb='git checkout -b'              # Create and checkout new branch[5][3]
+alias gb='git branch'                    # List branches[5][3]
+alias gd='git diff'                      # Diff[2][3]
+alias gdc='git diff --cached'            # Diff staged changes[2]
+alias ga='git add -A'                    # Add all changes[1][2]
+alias gap='git add -p'                   # Add interactively[1][2]
+alias gc='git commit -v'                 # Commit with verbose[1][2]
+alias gcm='git commit -m'                # Commit with message[2]
+alias gca='git commit -a -m'             # Add and commit all[2]
+alias gcam='git commit --amend'          # Amend last commit[2][1]
+alias gp='git push'                      # Push[1][3]
+alias gpo='git push origin'              # Push to origin[3]
+alias gpl='git pull'                     # Pull[1][3]
+alias gplo='git pull origin'             # Pull from origin[3]
+alias gst='git stash'                    # Stash changes[1]
+alias gstp='git stash pop'               # Pop stash[1]
+alias gcl='git clone'                    # Clone repo
+alias gr='git remote -v'                 # List remotes[1]
+alias grb='git rebase'                   # Rebase[2]
+alias grba='git rebase --abort'          # Abort rebase[1]
+alias grbc='git rebase --continue'       # Continue rebase[1]
+alias gcp='git cherry-pick'              # Cherry-pick commit[1]
+alias gsta='git stash apply'             # Apply stash
+alias gclean='git clean -fd'             # Remove untracked files
+
+# Show last commit
+alias glast='git log -1 HEAD'            # Show last commit[9]
+
+# Show aliases
+alias galias='git config --get-regexp alias' # List git aliases[2]
+
+# Add and commit together
+alias gac='git add . && git commit -m'   # Add all and commit[3]
+
+# Push current branch to origin
+alias gpthis='git push origin $(git rev-parse --abbrev-ref HEAD)'   # Push current branch[1]
+
+# List files
+alias ll='ls -la'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Editor shortcuts
+alias v='nvim'
+alias e='code --wait'
+
+# Disk usage
+alias du1='du -h --max-depth=1'
+
+# Networking
+alias ports='netstat -tulanp'
+
+# Search
+alias grep='grep --color=auto'
+alias f='find . -name'
+
+# System info
+alias myip='curl ifconfig.me'
+
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias ~='cd ~'
+alias c='clear'
