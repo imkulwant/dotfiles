@@ -1,0 +1,107 @@
+{
+  // === GENERAL EDITOR SETTINGS ===
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "editor.fontSize": 14,
+  "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+  "editor.lineNumbers": "on",
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": true,
+  "editor.renderWhitespace": "boundary",
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "window.autoDetectColorScheme": true,
+  // === LANGUAGE-SPECIFIC FORMATTING ===
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "[kotlin]": {
+    "editor.defaultFormatter": "mathiasfrohlich.Kotlin",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  // For JSON with Comments (.jsonc)
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[xml]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[yaml]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[properties]": {
+    "editor.formatOnSave": true
+  },
+  // === JAVA-SPECIFIC SETTINGS ===
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-21",
+      "path": "/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
+    },
+    {
+      "name": "JavaSE-24",
+      "path": "/opt/homebrew/opt/openjdk@24/libexec/openjdk.jdk/Contents/Home",
+      "default": true
+    }
+  ],
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.import.gradle.enabled": true,
+  "java.import.maven.enabled": true,
+  // === PYTHON-SPECIFIC SETTINGS ===
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+  "python.analysis.typeCheckingMode": "strict",
+  "python.venvPath": "${workspaceFolder}/.venv",
+  "python.terminal.activateEnvironment": true,
+  // Optional: Set Pylance as the default language server for speed and intelligence
+  "python.languageServer": "Pylance",
+  // === PRODUCTIVITY AND UI SETTINGS ===
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.showTabs": "multiple",
+  "workbench.statusBar.visible": true,
+  // === TERMINAL SETTINGS ===
+  "terminal.integrated.fontSize": 14,
+  // === GIT INTEGRATION ===
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  // === EXTENSION-SPECIFIC SETTINGS ===
+  "extensions.autoUpdate": true,
+  "extensions.ignoreRecommendations": false
+}
