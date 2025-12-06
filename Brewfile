@@ -7,7 +7,6 @@ brew "openjdk@21"
 brew "maven"
 brew "k9s"
 brew "python@3.13"
-brew "python@3.12"
 brew "pyenv"
 brew "pipx"
 
