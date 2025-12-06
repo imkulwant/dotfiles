@@ -19,3 +19,6 @@
 `chezmoi verify`: Check if home matches source.
 
 `chezmoi list [--managed | --unmanaged]`: List managed/unmanaged files.
+
+`brew bundle install --file ~/Brewfile`
+
