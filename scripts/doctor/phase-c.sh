@@ -75,4 +75,11 @@ assert_no_grep '\[[0-9]+\]' "$(chezmoi source-path)/dot_aliases.zsh.tmpl"
 check ".chezmoidata.yaml no-op has been removed"
 assert_no_file "$(chezmoi source-path)/.chezmoidata.yaml"
 
+# Sub-task 11 - .DS_Store handling (SWOT threat 6)
+check ".chezmoiignore blocks .DS_Store"
+assert_grep '^\.DS_Store$' "$(chezmoi source-path)/.chezmoiignore"
+
+check "no .DS_Store files remain in the chezmoi source tree"
+assert_cmd_ok "[ -z \"\$(find \"\$(chezmoi source-path)\" -name .DS_Store)\" ]"
+
 phase_end

@@ -10,6 +10,12 @@ SWOT.md
 scripts
 justfile
 
+# macOS metadata - Finder drops these into every visited directory.
+# .gitignore already blocks tracking; this stops chezmoi from surfacing
+# them via 'chezmoi add' or applying stray ones to $HOME.
+.DS_Store
+**/.DS_Store
+
 .oh-my-zsh/cache/*
 .oh-my-zsh/custom/*
 .oh-my-zsh/plugins/*
