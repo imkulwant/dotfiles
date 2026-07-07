@@ -1,11 +1,22 @@
 #!/bin/bash
-# Ensure zsh is installed and set as default shell
-if ! command -v zsh >/dev/null 2>&1; then
-  echo "Installing zsh..."
+# Ensure Homebrew's zsh is installed and set as the default shell.
+# Homebrew zsh (currently 5.9+) is newer than Apple's bundled /bin/zsh
+# and is the version this repo's config targets.
+
+HOMEBREW_ZSH="/opt/homebrew/bin/zsh"
+
+if ! [ -x "$HOMEBREW_ZSH" ]; then
+  echo "Installing Homebrew zsh..."
   brew install zsh
 fi
 
-if [ "$SHELL" != "/bin/zsh" ]; then
-  echo "Changing default shell to zsh..."
-  chsh -s /bin/zsh
+# chsh requires the target shell to be listed in /etc/shells.
+if ! grep -qxF "$HOMEBREW_ZSH" /etc/shells; then
+  echo "Registering $HOMEBREW_ZSH in /etc/shells (needs sudo)..."
+  echo "$HOMEBREW_ZSH" | sudo tee -a /etc/shells >/dev/null
+fi
+
+if [ "$SHELL" != "$HOMEBREW_ZSH" ]; then
+  echo "Changing default shell to $HOMEBREW_ZSH..."
+  chsh -s "$HOMEBREW_ZSH"
 fi

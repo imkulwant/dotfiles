@@ -46,4 +46,16 @@ assert_no_grep '/python3\.12' "$VSCODE_SETTINGS"
 check "VS Code settings.json references python3.13 (matches Brewfile)"
 assert_grep '/python3\.13' "$VSCODE_SETTINGS"
 
+# Sub-task 7 - chsh uses Homebrew zsh, not system /bin/zsh (SWOT bug 9)
+ENSURE_ZSH="$(chezmoi source-path)/.chezmoiscripts/run_once_before_10_ensure_zsh.sh.tmpl"
+
+check "ensure_zsh script targets /opt/homebrew/bin/zsh"
+assert_grep '/opt/homebrew/bin/zsh' "$ENSURE_ZSH"
+
+check "ensure_zsh script no longer chsh's to bare /bin/zsh"
+assert_no_grep 'chsh -s /bin/zsh' "$ENSURE_ZSH"
+
+check "ensure_zsh script registers Homebrew zsh in /etc/shells"
+assert_grep '/etc/shells' "$ENSURE_ZSH"
+
 phase_end
