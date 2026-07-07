@@ -82,4 +82,11 @@ assert_grep '^\.DS_Store$' "$(chezmoi source-path)/.chezmoiignore"
 check "no .DS_Store files remain in the chezmoi source tree"
 assert_cmd_ok "[ -z \"\$(find \"\$(chezmoi source-path)\" -name .DS_Store)\" ]"
 
+# Sub-task 12 - LICENSE present (SWOT gap 26). .chezmoiignore excludes from apply.
+check "LICENSE exists at repo root"
+assert_file "$(chezmoi source-path)/LICENSE"
+
+check "LICENSE is MIT"
+assert_grep 'MIT License' "$(chezmoi source-path)/LICENSE"
+
 phase_end
