@@ -89,4 +89,24 @@ assert_file "$(chezmoi source-path)/LICENSE"
 check "LICENSE is MIT"
 assert_grep 'MIT License' "$(chezmoi source-path)/LICENSE"
 
+# Sub-task 3+5 - OMZ install-path consolidation (SWOT bugs 3, 4, 5, 6).
+# Duplicated run_once scripts removed; externals become sole install path.
+check "duplicated OMZ install script removed"
+assert_no_file "$(chezmoi source-path)/.chezmoiscripts/run_once_before_30_install_ohmyzsh.sh.tmpl"
+
+check "duplicated Powerlevel10k install script removed"
+assert_no_file "$(chezmoi source-path)/.chezmoiscripts/run_once_before_40_install_powerlevel10k.sh.tmpl"
+
+check "duplicated OMZ plugins install script removed"
+assert_no_file "$(chezmoi source-path)/.chezmoiscripts/run_once_before_ohmyzsh-plugins.sh.tmpl"
+
+check ".chezmoiignore no longer blocks the whole .oh-my-zsh/custom subtree"
+assert_no_grep '^\.oh-my-zsh/custom/\*$' "$(chezmoi source-path)/.chezmoiignore"
+
+check ".chezmoiignore no longer blocks .oh-my-zsh/lib (needed for OMZ runtime)"
+assert_no_grep '^\.oh-my-zsh/lib/\*$' "$(chezmoi source-path)/.chezmoiignore"
+
+check ".chezmoiignore still blocks the OMZ runtime cache"
+assert_grep '^\.oh-my-zsh/cache' "$(chezmoi source-path)/.chezmoiignore"
+
 phase_end

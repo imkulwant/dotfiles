@@ -16,10 +16,18 @@ justfile
 .DS_Store
 **/.DS_Store
 
-.oh-my-zsh/cache/*
-.oh-my-zsh/custom/*
-.oh-my-zsh/plugins/*
-.oh-my-zsh/themes/*
-.oh-my-zsh/tools/*
-.oh-my-zsh/lib/*
-.oh-my-zsh/custom/themes/*
+# Oh My Zsh: installed via .chezmoiexternal.toml (pinned OMZ tarball
+# plus separate tarballs for the p10k theme and the two zsh plugins).
+# Ignore only:
+#   - runtime state that OMZ regenerates on each shell startup
+#   - upstream repo metadata (has no runtime value in $HOME)
+# Everything the shell actually needs (lib/, plugins/, themes/, tools/,
+# custom/themes/powerlevel10k, custom/plugins/zsh-*) is extracted from
+# the pinned tarballs. Previously the whole 'custom/*' tree was ignored,
+# which silently blocked the p10k+plugin externals from being applied.
+.oh-my-zsh/cache
+.oh-my-zsh/cache/**
+.oh-my-zsh/log
+.oh-my-zsh/log/**
+.oh-my-zsh/.github
+.oh-my-zsh/.github/**
