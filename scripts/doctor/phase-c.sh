@@ -58,4 +58,12 @@ assert_no_grep 'chsh -s /bin/zsh' "$ENSURE_ZSH"
 check "ensure_zsh script registers Homebrew zsh in /etc/shells"
 assert_grep '/etc/shells' "$ENSURE_ZSH"
 
+# Sub-task 8 - every chezmoi script guarded by 'set -euo pipefail' (SWOT bug 10)
+for f in "$(chezmoi source-path)/.chezmoiscripts"/*.sh.tmpl \
+         "$(chezmoi source-path)"/run_onchange_*.sh.tmpl; do
+  [ -f "$f" ] || continue
+  check "$(basename "$f") has 'set -euo pipefail'"
+  assert_grep '^set -euo pipefail' "$f"
+done
+
 phase_end
