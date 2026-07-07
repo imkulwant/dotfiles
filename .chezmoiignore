@@ -2,6 +2,14 @@
 
 README.md
 LICENSE
+
+# Repo-only files: planning docs, doctor scaffolding, task runner.
+# These live in the source repo but should never be written to $HOME.
+OVERHAUL_PLAN.md
+SWOT.md
+scripts
+justfile
+
 .oh-my-zsh/cache/*
 .oh-my-zsh/custom/*
 .oh-my-zsh/plugins/*
