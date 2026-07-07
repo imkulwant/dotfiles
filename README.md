@@ -31,5 +31,3 @@ No `install.sh` is needed - `chezmoi init --apply` is the only entrypoint.
 
 `chezmoi list [--managed | --unmanaged]`: List managed/unmanaged files.
 
-`brew bundle install --file ~/Brewfile`
-
