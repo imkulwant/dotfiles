@@ -19,4 +19,16 @@ check "README documents the chezmoi bootstrap one-liner"
 assert_grep 'chezmoi init --apply|chezmoi.io.*init --apply|get.chezmoi.io' \
   "$(chezmoi source-path)/README.md"
 
+# Sub-task 4 - .chezmoiexternal.toml pinned to immutable refs (no master.tar.gz)
+check ".chezmoiexternal.toml does not use unpinned 'master.tar.gz' URLs"
+assert_no_grep 'archive/master\.tar\.gz' "$(chezmoi source-path)/.chezmoiexternal.toml"
+
+check ".chezmoiexternal.toml pins zsh-syntax-highlighting to a tag"
+assert_grep 'zsh-syntax-highlighting/archive/[0-9]' \
+  "$(chezmoi source-path)/.chezmoiexternal.toml"
+
+check ".chezmoiexternal.toml pins zsh-autosuggestions to a tag"
+assert_grep 'zsh-autosuggestions/archive/v[0-9]' \
+  "$(chezmoi source-path)/.chezmoiexternal.toml"
+
 phase_end

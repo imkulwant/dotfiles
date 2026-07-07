@@ -1,9 +1,15 @@
+# External sources. All URLs pinned to immutable refs (tags or commit SHAs)
+# so a fresh install cannot break because upstream shipped a breaking change.
+# Bump these deliberately, not implicitly.
+
+# oh-my-zsh has no version tags; pinned to a specific commit. Bump by
+# running `git ls-remote https://github.com/ohmyzsh/ohmyzsh HEAD` and
+# updating the SHA in the URL below. Date of current pin: 2026-07-07.
 [".oh-my-zsh"]
 type = "archive"
-url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+url = "https://github.com/ohmyzsh/ohmyzsh/archive/677a4592b18c08ddea737f8aca70bac0e9fc9313.tar.gz"
 exact = true
 stripComponents = 1
-refreshPeriod = "168h"  # one week
 
 [".oh-my-zsh/custom/themes/powerlevel10k"]
 type = "archive"
@@ -13,14 +19,12 @@ stripComponents = 1
 
 [".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
 type = "archive"
-url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz"
+url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/0.8.0.tar.gz"
 exact = true
 stripComponents = 1
-refreshPeriod = "168h"
 
 [".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
 type = "archive"
-url = "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
+url = "https://github.com/zsh-users/zsh-autosuggestions/archive/v0.7.1.tar.gz"
 exact = true
 stripComponents = 1
-refreshPeriod = "168h"  # (optional) refresh weekly
