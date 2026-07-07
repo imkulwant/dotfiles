@@ -1,5 +1,16 @@
 # dotfiles
 
+## Bootstrap (fresh Mac)
+
+```sh
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply imkulwant
+```
+
+That single command installs chezmoi, clones this repo, and applies it.
+No `install.sh` is needed - `chezmoi init --apply` is the only entrypoint.
+
+## Chezmoi cheatsheet
+
 `chezmoi add $FILE`: Add a file from home to source directory (use --template for templates, --exact for non-dotfiles).
 
 `chezmoi status`: Quick summary of pending changes.
