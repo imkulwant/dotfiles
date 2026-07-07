@@ -66,4 +66,8 @@ for f in "$(chezmoi source-path)/.chezmoiscripts"/*.sh.tmpl \
   assert_grep '^set -euo pipefail' "$f"
 done
 
+# Sub-task 9 - dot_aliases.zsh.tmpl has no LLM citation markers (SWOT bug 11)
+check "dot_aliases.zsh.tmpl has no '[N]' citation markers"
+assert_no_grep '\[[0-9]+\]' "$(chezmoi source-path)/dot_aliases.zsh.tmpl"
+
 phase_end
