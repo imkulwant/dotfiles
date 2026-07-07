@@ -70,4 +70,9 @@ done
 check "dot_aliases.zsh.tmpl has no '[N]' citation markers"
 assert_no_grep '\[[0-9]+\]' "$(chezmoi source-path)/dot_aliases.zsh.tmpl"
 
+# Sub-task 10 - .chezmoidata.yaml no-op removed (SWOT bug 12).
+# Will be reintroduced in Phase L for per-host templating.
+check ".chezmoidata.yaml no-op has been removed"
+assert_no_file "$(chezmoi source-path)/.chezmoidata.yaml"
+
 phase_end
