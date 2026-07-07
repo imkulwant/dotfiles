@@ -109,4 +109,8 @@ assert_no_grep '^\.oh-my-zsh/lib/\*$' "$(chezmoi source-path)/.chezmoiignore"
 check ".chezmoiignore still blocks the OMZ runtime cache"
 assert_grep '^\.oh-my-zsh/cache' "$(chezmoi source-path)/.chezmoiignore"
 
+# Sub-task 13 - branch renamed master -> main (SWOT bug 18)
+check "current branch is 'main'"
+assert_cmd_out "git -C \"\$(chezmoi source-path)\" branch --show-current" "^main$"
+
 phase_end
