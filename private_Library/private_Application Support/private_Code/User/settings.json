@@ -73,11 +73,7 @@
   "java.configuration.runtimes": [
     {
       "name": "JavaSE-21",
-      "path": "/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
-    },
-    {
-      "name": "JavaSE-24",
-      "path": "/opt/homebrew/opt/openjdk@24/libexec/openjdk.jdk/Contents/Home",
+      "path": "/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home",
       "default": true
     }
   ],
@@ -85,7 +81,7 @@
   "java.import.gradle.enabled": true,
   "java.import.maven.enabled": true,
   // === PYTHON-SPECIFIC SETTINGS ===
-  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3.12",
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3.13",
   "python.analysis.typeCheckingMode": "off",
   "python.venvPath": "${workspaceFolder}/.venv",
   "python.terminal.activateEnvironment": true,
@@ -93,7 +89,7 @@
   "python.languageServer": "None",
   // ADD THESE for Code Runner:
   "code-runner.executorMap": {
-    "python": "/opt/homebrew/bin/python3.12 -u"
+    "python": "/opt/homebrew/bin/python3.13 -u"
   },
   "code-runner.runInTerminal": true,
   // === PRODUCTIVITY AND UI SETTINGS ===

@@ -31,4 +31,19 @@ check ".chezmoiexternal.toml pins zsh-autosuggestions to a tag"
 assert_grep 'zsh-autosuggestions/archive/v[0-9]' \
   "$(chezmoi source-path)/.chezmoiexternal.toml"
 
+# Sub-task 6 - VS Code settings.json version drift (SWOT bugs 7, 8)
+VSCODE_SETTINGS="$(chezmoi source-path)/private_Library/private_Application Support/private_Code/User/settings.json"
+
+check "VS Code settings.json no longer references openjdk@24"
+assert_no_grep 'openjdk@24' "$VSCODE_SETTINGS"
+
+check "VS Code settings.json declares JavaSE-21 as default runtime"
+assert_grep '"name": "JavaSE-21"' "$VSCODE_SETTINGS"
+
+check "VS Code settings.json no longer references python3.12"
+assert_no_grep '/python3\.12' "$VSCODE_SETTINGS"
+
+check "VS Code settings.json references python3.13 (matches Brewfile)"
+assert_grep '/python3\.13' "$VSCODE_SETTINGS"
+
 phase_end
