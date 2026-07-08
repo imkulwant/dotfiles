@@ -60,6 +60,16 @@ assert_grep "alias cat='bat" "$SOURCE/dot_aliases.zsh.tmpl"
 check "dot_aliases.zsh.tmpl has lg=lazygit alias"
 assert_grep "alias lg='lazygit'" "$SOURCE/dot_aliases.zsh.tmpl"
 
+# ── p10k fully removed ────────────────────────────────────────────────────────
+check "dot_p10k.zsh.tmpl removed from chezmoi source"
+assert_no_file "$SOURCE/dot_p10k.zsh.tmpl"
+
+check "~/.p10k.zsh not present in HOME (p10k fully retired)"
+assert_no_file "$HOME/.p10k.zsh"
+
+check "atuin has history (import zsh was run)"
+assert_cmd_ok "[ -s \"$HOME/.local/share/atuin/history.db\" ]"
+
 # ── Runtime verification ──────────────────────────────────────────────────────
 check "Interactive zsh has starship prompt (STARSHIP_SHELL set)"
 assert_cmd_ok "zsh -i -c 'test -n \"\$STARSHIP_SHELL\"'"
