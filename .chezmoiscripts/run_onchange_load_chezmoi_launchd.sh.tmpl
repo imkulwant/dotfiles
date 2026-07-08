@@ -5,10 +5,23 @@ set -euo pipefail
 
 PLIST="$HOME/Library/LaunchAgents/com.kulsin.chezmoi-update.plist"
 LABEL="com.kulsin.chezmoi-update"
-GUI="gui/$(id -u)"
+UID_="$(id -u)"
 
-launchctl bootout "$GUI/$LABEL" 2>/dev/null || true
-launchctl bootstrap "$GUI" "$PLIST"
+# Prefer the user domain: works over SSH, during initial setup before Aqua
+# binds, and under MDM policies that restrict gui/<uid>. Fall back to the
+# gui domain only if user/<uid> refuses (unusual, but seen on some hosts).
+# Clear any stale bootstrap in either domain before re-loading.
+launchctl bootout "user/$UID_/$LABEL" 2>/dev/null || true
+launchctl bootout "gui/$UID_/$LABEL" 2>/dev/null || true
 
-echo "chezmoi-update launchd agent loaded."
+if launchctl bootstrap "user/$UID_" "$PLIST" 2>/dev/null; then
+  echo "chezmoi-update launchd agent loaded (user/$UID_)."
+elif launchctl bootstrap "gui/$UID_" "$PLIST" 2>/dev/null; then
+  echo "chezmoi-update launchd agent loaded (gui/$UID_)."
+else
+  echo "chezmoi-update launchd agent failed to load in either domain." >&2
+  # Surface the actual error from user/<uid> for debugging.
+  launchctl bootstrap "user/$UID_" "$PLIST" || true
+  exit 1
+fi
 {{ end -}}
