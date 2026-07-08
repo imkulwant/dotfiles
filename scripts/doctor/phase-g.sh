@@ -6,7 +6,7 @@ phase_start "G" "Neovim"
 SOURCE="$(chezmoi source-path)"
 
 # ── Chezmoi tracking ──────────────────────────────────────────────────────────
-check "~/.config/nvim/init.lua managed by chezmoi"
+check "$HOME/.config/nvim/init.lua managed by chezmoi"
 assert_file "$SOURCE/dot_config/nvim/init.lua"
 
 check "nvim-pack-lock.json tracked"

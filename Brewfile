@@ -26,6 +26,11 @@ brew "just"
 brew "mise"
 brew "uv"
 
+# ── CI & code quality ─────────────────────────────────────────────────────────
+brew "shellcheck"
+brew "shfmt"
+brew "pre-commit"
+
 # ── Data & infra tools ───────────────────────────────────────────────────────
 brew "tree-sitter-cli"
 brew "jq"

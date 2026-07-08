@@ -37,10 +37,10 @@ if ! printf '%s\n' "$_brew_formulae" | grep -qx "pipx"; then pass; else fail "pi
 check "openjdk@21 no longer installed via brew (mise manages Java)"
 if ! printf '%s\n' "$_brew_formulae" | grep -qx "openjdk@21"; then pass; else fail "openjdk@21 still installed — run: brew uninstall openjdk@21"; fi
 
-check "~/.jenv state directory removed"
+check "$HOME/.jenv state directory removed"
 assert_cmd_ok "[ ! -d \"$HOME/.jenv\" ]"
 
-check "~/.pyenv state directory removed"
+check "$HOME/.pyenv state directory removed"
 assert_cmd_ok "[ ! -d \"$HOME/.pyenv\" ]"
 
 # ── Brewfile ──────────────────────────────────────────────────────────────────

@@ -30,7 +30,7 @@ assert_grep 'bind h select-pane -L' "$SOURCE/dot_config/tmux/tmux.conf"
 check "tmux.conf has reload binding"
 assert_grep 'source-file' "$SOURCE/dot_config/tmux/tmux.conf"
 
-check "~/.config/tmux/tmux.conf applied"
+check "$HOME/.config/tmux/tmux.conf applied"
 assert_file "$HOME/.config/tmux/tmux.conf"
 
 # Runtime check only meaningful inside a tmux session

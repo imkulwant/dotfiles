@@ -41,19 +41,19 @@ check "dot_gitconfig.tmpl exists in chezmoi source"
 assert_file "$SOURCE/dot_gitconfig.tmpl"
 
 # ── SSH config ───────────────────────────────────────────────────────────────
-check "~/.ssh/config exists"
+check "$HOME/.ssh/config exists"
 assert_file "$HOME/.ssh/config"
 
-check "~/.ssh/config has 0600 perms"
+check "$HOME/.ssh/config has 0600 perms"
 assert_perm "$HOME/.ssh/config" 600
 
-check "~/.ssh/config has Host * with UseKeychain yes"
+check "$HOME/.ssh/config has Host * with UseKeychain yes"
 assert_grep 'UseKeychain yes' "$HOME/.ssh/config"
 
-check "~/.ssh/config has IdentitiesOnly yes"
+check "$HOME/.ssh/config has IdentitiesOnly yes"
 assert_grep 'IdentitiesOnly yes' "$HOME/.ssh/config"
 
-check "~/.ssh/config has explicit Host github.com block"
+check "$HOME/.ssh/config has explicit Host github.com block"
 assert_grep 'Host github.com' "$HOME/.ssh/config"
 
 check "GitHub SSH authentication works"

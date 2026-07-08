@@ -33,7 +33,7 @@ phase_start() {
 }
 
 phase_end() {
-  :  # reserved for per-phase footers if needed later
+  : # reserved for per-phase footers if needed later
 }
 
 check() {
@@ -76,13 +76,19 @@ assert_dir() {
 
 assert_grep() {
   local pattern="$1" file="$2"
-  if [ ! -f "$file" ]; then fail "file not found: $file"; return; fi
+  if [ ! -f "$file" ]; then
+    fail "file not found: $file"
+    return
+  fi
   if grep -qE -- "$pattern" "$file"; then pass; else fail "pattern not found: '$pattern' in $file"; fi
 }
 
 assert_no_grep() {
   local pattern="$1" file="$2"
-  if [ ! -f "$file" ]; then fail "file not found: $file"; return; fi
+  if [ ! -f "$file" ]; then
+    fail "file not found: $file"
+    return
+  fi
   if ! grep -qE -- "$pattern" "$file"; then pass; else fail "pattern still present: '$pattern' in $file"; fi
 }
 
@@ -107,7 +113,10 @@ assert_cmd_out() {
 
 assert_perm() {
   local path="$1" expected="$2" actual
-  if [ ! -e "$path" ]; then fail "path not found: $path"; return; fi
+  if [ ! -e "$path" ]; then
+    fail "path not found: $path"
+    return
+  fi
   actual=$(stat -f %A "$path" 2>/dev/null || stat -c %a "$path" 2>/dev/null || echo "?")
   if [ "$actual" = "$expected" ]; then pass; else fail "$path perms are $actual, expected $expected"; fi
 }

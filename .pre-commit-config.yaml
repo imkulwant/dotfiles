@@ -1,0 +1,31 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+        args: [--maxkb=500]
+      - id: check-merge-conflict
+
+  # shellcheck and shfmt are installed via Brewfile — use local hooks
+  # so we don't pull down extra Python virtualenvs for them.
+  - repo: local
+    hooks:
+      - id: shellcheck
+        name: shellcheck
+        language: system
+        entry: shellcheck
+        args: [--severity=warning]
+        # Only check plain .sh files; .sh.tmpl contain chezmoi template syntax
+        # which shellcheck cannot parse. Templates are validated by chezmoi itself.
+        types: [shell]
+        files: \.sh$
+
+      - id: shfmt
+        name: shfmt
+        language: system
+        entry: shfmt
+        args: [-d, -i, "2"]
+        types: [shell]
+        files: \.sh$

@@ -64,7 +64,7 @@ assert_grep "alias lg='lazygit'" "$SOURCE/dot_aliases.zsh.tmpl"
 check "dot_p10k.zsh.tmpl removed from chezmoi source"
 assert_no_file "$SOURCE/dot_p10k.zsh.tmpl"
 
-check "~/.p10k.zsh not present in HOME (p10k fully retired)"
+check "$HOME/.p10k.zsh not present in HOME (p10k fully retired)"
 assert_no_file "$HOME/.p10k.zsh"
 
 check "atuin has history (import zsh was run)"
@@ -87,7 +87,7 @@ check "Shell startup under 500ms"
 _start=$(date +%s%N 2>/dev/null || echo 0)
 zsh -i -c exit 2>/dev/null
 _end=$(date +%s%N 2>/dev/null || echo 0)
-_ms=$(( (_end - _start) / 1000000 ))
+_ms=$(((_end - _start) / 1000000))
 [ "$_ms" -lt 500 ] && pass || fail "startup took ${_ms}ms (target: <500ms)"
 
 phase_end

@@ -39,8 +39,8 @@ _check_cask "font-meslo-lg-nerd-font"
 check "nvim >= 0.10"
 assert_cmd_out "nvim --version" "NVIM v0\\.1"
 
-check "brew bundle check clean"
-assert_cmd_ok "brew bundle check --file '$SOURCE/Brewfile'"
+check "brew bundle check clean (VS Code excluded — self-updates outside brew)"
+assert_cmd_ok "HOMEBREW_BUNDLE_CASK_SKIP=visual-studio-code brew bundle check --file '$SOURCE/Brewfile'"
 
 # ── run_onchange script ───────────────────────────────────────────────────────
 check "run_onchange script contains SHA hash trigger"

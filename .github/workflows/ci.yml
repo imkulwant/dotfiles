@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get update -q && sudo apt-get install -y shellcheck
+
+      - name: Install shfmt
+        run: |
+          curl -sSfL \
+            "https://github.com/mvdan/sh/releases/download/v3.11.0/shfmt_v3.11.0_linux_amd64" \
+            -o /usr/local/bin/shfmt
+          chmod +x /usr/local/bin/shfmt
+
+      - name: shellcheck
+        run: find scripts/doctor -name '*.sh' -exec shellcheck --severity=warning {} +
+
+      - name: shfmt
+        run: find scripts/doctor -name '*.sh' -exec shfmt -d -i 2 {} +
+
+  validate:
+    name: Validate chezmoi config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Install just
+        run: |
+          curl -sSfL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
+
+      - name: Validate templates (chezmoi execute-template)
+        run: |
+          chezmoi execute-template --source=. < run_onchange_install-brewfile.sh.tmpl
+          chezmoi execute-template --source=. < dot_zshrc.tmpl
+
+      - name: chezmoi apply --dry-run
+        run: chezmoi apply --dry-run --source=. --destination=/tmp/chezmoi-home
+
+      - name: just doctor C (file-content checks, no brew/macOS deps)
+        run: just doctor C
+
+      - name: Formula drift check
+        run: bash scripts/doctor/formula-drift-check.sh
