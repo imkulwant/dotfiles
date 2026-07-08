@@ -1,0 +1,37 @@
+[user]
+	name = Kulwant Singh
+	email = singh.kulwant@gmx.com
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+
+[rerere]
+	enabled = true
+
+[core]
+	pager = delta
+	autocrlf = input
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	dark = true
+
+[merge]
+	conflictstyle = zdiff3
+
+[diff]
+	colorMoved = default
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/

@@ -1,0 +1,19 @@
+# ── Global defaults ────────────────────────────────────────────────────────────
+Host *
+    UseKeychain yes
+    AddKeysToAgent yes
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_ed25519
+
+# ── GitHub ────────────────────────────────────────────────────────────────────
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    AddKeysToAgent yes
+    UseKeychain yes
+
+# ── Local machines ─────────────────────────────────────────────────────────────
+Host caduceus
+    HostName 192.168.0.100
+    User kulsin

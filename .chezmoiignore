@@ -16,6 +16,15 @@ justfile
 .DS_Store
 **/.DS_Store
 
+# SSH: only ~/.ssh/config is tracked. Private keys, known_hosts, and the
+# agent socket must never enter the source tree.
+.ssh/id_*
+.ssh/*.pub
+.ssh/known_hosts
+.ssh/known_hosts.old
+.ssh/agent
+.ssh/agent/**
+
 # Neovim plugin state — managed by vim.pack, never tracked by chezmoi.
 # Only ~/.config/nvim (init.lua, nvim-pack-lock.json) belongs in chezmoi.
 .local/share/nvim
