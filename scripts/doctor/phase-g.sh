@@ -57,8 +57,20 @@ assert_grep 'pyright' "$SOURCE/dot_config/nvim/init.lua"
 check "init.lua includes harpoon2"
 assert_grep 'harpoon' "$SOURCE/dot_config/nvim/init.lua"
 
+check "init.lua uses 'version' field for harpoon2 branch (not 'checkout')"
+assert_grep "version = 'harpoon2'" "$SOURCE/dot_config/nvim/init.lua"
+
+check "nvim-pack-lock.json pins harpoon to harpoon2 commit (not master)"
+assert_no_grep '1bc17e3e42ea3c46b33c0bbad6a880792692a1b3' "$SOURCE/dot_config/nvim/nvim-pack-lock.json"
+
+check "nvim-pack-lock.json records harpoon2 version field"
+assert_grep '"version": "harpoon2"' "$SOURCE/dot_config/nvim/nvim-pack-lock.json"
+
 check "init.lua has lazygit <leader>gg binding"
 assert_grep 'leader.*gg' "$SOURCE/dot_config/nvim/init.lua"
+
+check ".chezmoiignore blocks ~/.local/share/nvim"
+assert_grep '\.local/share/nvim' "$SOURCE/.chezmoiignore"
 
 check "chezmoi diff for nvim is clean"
 assert_cmd_ok "[ -z \"\$(chezmoi diff ~/.config/nvim)\" ]"

@@ -16,6 +16,11 @@ justfile
 .DS_Store
 **/.DS_Store
 
+# Neovim plugin state — managed by vim.pack, never tracked by chezmoi.
+# Only ~/.config/nvim (init.lua, nvim-pack-lock.json) belongs in chezmoi.
+.local/share/nvim
+.local/share/nvim/**
+
 # Oh My Zsh: installed via .chezmoiexternal.toml (pinned OMZ tarball
 # plus separate tarballs for the p10k theme and the two zsh plugins).
 # Ignore only:
