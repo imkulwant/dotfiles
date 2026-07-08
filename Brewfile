@@ -36,14 +36,10 @@ brew "dust"
 brew "k9s"
 brew "chezmoi"
 
-# ── Java & build tools (managed by mise in Phase I) ──────────────────────────
-brew "openjdk@21"
+# ── Java & build tools (managed by mise) ─────────────────────────────────────
 brew "maven"
 
-# ── Legacy version managers (removed in Phase I) ─────────────────────────────
-brew "jenv"
-brew "pyenv"
-brew "pipx"
+# ── Python ────────────────────────────────────────────────────────────────────
 brew "python@3.13"
 
 # ── Casks ─────────────────────────────────────────────────────────────────────

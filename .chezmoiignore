@@ -3,12 +3,13 @@
 README.md
 LICENSE
 
-# Repo-only files: planning docs, doctor scaffolding, task runner.
+# Repo-only files: planning docs, doctor scaffolding, task runner, templates.
 # These live in the source repo but should never be written to $HOME.
 OVERHAUL_PLAN.md
 SWOT.md
 scripts
 justfile
+templates
 
 # macOS metadata - Finder drops these into every visited directory.
 # .gitignore already blocks tracking; this stops chezmoi from surfacing
@@ -24,6 +25,11 @@ justfile
 .ssh/known_hosts.old
 .ssh/agent
 .ssh/agent/**
+
+# mise tool installs — managed by mise, never tracked by chezmoi.
+# Only ~/.config/mise/config.toml belongs in chezmoi (added in Phase L).
+.local/share/mise
+.local/share/mise/**
 
 # Neovim plugin state — managed by vim.pack, never tracked by chezmoi.
 # Only ~/.config/nvim (init.lua, nvim-pack-lock.json) belongs in chezmoi.
