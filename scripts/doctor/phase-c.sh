@@ -60,7 +60,7 @@ assert_grep '/etc/shells' "$ENSURE_ZSH"
 
 # Sub-task 8 - every chezmoi script guarded by 'set -euo pipefail' (SWOT bug 10)
 for f in "$(chezmoi source-path)/.chezmoiscripts"/*.sh.tmpl \
-         "$(chezmoi source-path)"/run_onchange_*.sh.tmpl; do
+  "$(chezmoi source-path)"/run_onchange_*.sh.tmpl; do
   [ -f "$f" ] || continue
   check "$(basename "$f") has 'set -euo pipefail'"
   assert_grep '^set -euo pipefail' "$f"
@@ -69,11 +69,6 @@ done
 # Sub-task 9 - dot_aliases.zsh.tmpl has no LLM citation markers (SWOT bug 11)
 check "dot_aliases.zsh.tmpl has no '[N]' citation markers"
 assert_no_grep '\[[0-9]+\]' "$(chezmoi source-path)/dot_aliases.zsh.tmpl"
-
-# Sub-task 10 - .chezmoidata.yaml no-op removed (SWOT bug 12).
-# Will be reintroduced in Phase L for per-host templating.
-check ".chezmoidata.yaml no-op has been removed"
-assert_no_file "$(chezmoi source-path)/.chezmoidata.yaml"
 
 # Sub-task 11 - .DS_Store handling (SWOT threat 6)
 check ".chezmoiignore blocks .DS_Store"

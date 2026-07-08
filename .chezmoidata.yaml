@@ -1,0 +1,4 @@
+# Template data for per-host and per-environment branching.
+# Usage in templates: {{ if .work }}...{{ end }}
+# Hostname available via built-in: {{ .chezmoi.hostname }} (e.g. "panzer.local")
+work: false
