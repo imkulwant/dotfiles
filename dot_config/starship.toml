@@ -1,0 +1,38 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+[character]
+success_symbol = '[❯](green)'
+error_symbol = '[❯](red)'
+
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+
+[git_branch]
+format = '[$symbol$branch]($style) '
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+
+[java]
+format = '[☕ $version]($style) '
+detect_files = ['pom.xml', 'build.gradle', '*.java', 'build.gradle.kts', '.mvn']
+
+[cmd_duration]
+min_time = 2000
+format = '[$duration]($style) '
+
+# Disabled: these modules shell out on every prompt and add latency
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[kubernetes]
+disabled = true

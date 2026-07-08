@@ -1,0 +1,3 @@
+search_mode = "fuzzy"
+auto_sync = false
+update_check = false

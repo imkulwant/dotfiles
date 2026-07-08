@@ -1,64 +1,34 @@
-# Enable Powerlevel10k instant prompt for fast shell startup
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-
-# Path to your Oh My Zsh installation.
+# Path to Oh My Zsh
 export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
+# No theme — starship handles the prompt
+ZSH_THEME=""
 
-# Optional: Set custom directory for your scripts and plugins
-export ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"  # Default value, can be changed
-
-
-# Set the theme to Powerlevel10k
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-
-# Oh My Zsh plugins
+# OMZ plugins
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-# Uncomment to show red dots while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-# Uncomment to change history timestamp format
-# HIST_STAMPS="yyyy-mm-dd"
-# Uncomment to disable marking untracked files under VCS as dirty
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-
-# Set Visual Studio Code as the default editor
-export EDITOR="code --wait"
-
-
-# Source Powerlevel10k config if present
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-
-
-# Add Homebrew to PATH if installed (optional for Linuxbrew users)
+# Homebrew (must be early so all tools are on PATH)
 if [[ -d "/opt/homebrew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-
-# jenv (Java version manager)
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
-
-# fzf (Fuzzy finder)
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-
-# Loads the main Oh My Zsh initialization script
 source $ZSH/oh-my-zsh.sh
 
-
-# Source custom aliases if present
-# Added after `source $ZSH/oh-my-zsh.sh` to ensures that custom aliases override any defaults set by Oh My Zsh or the system.
-#[ -f $ZSH_CUSTOM/aliases.zsh ] && source $ZSH_CUSTOM/aliases.zsh
+# Source aliases
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 
+# ── Editor ────────────────────────────────────────────────────────────────────
+export EDITOR="nvim"
+
+# ── fzf env (must be set before sourcing fzf) ────────────────────────────────
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :50 {}'"
+
+# ── Tool hooks (order matters: fzf before atuin so atuin owns Ctrl-R) ─────────
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+eval "$(mise activate zsh)"
+eval "$(direnv hook zsh)"
+source <(fzf --zsh)
+eval "$(atuin init zsh)"

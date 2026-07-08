@@ -41,13 +41,20 @@ alias gac='git add . && git commit -m'   # Add all and commit
 alias gpthis='git push origin $(git rev-parse --abbrev-ref HEAD)'   # Push current branch
 
 # List files
-alias ll='ls -la'
-alias la='ls -A'
-alias l='ls -CF'
+alias ls='eza --icons --git'
+alias ll='eza -la --icons --git'
+alias la='eza -a --icons --git'
+alias l='eza --icons --git'
+
+# File viewing
+alias cat='bat --paging=never'
 
 # Editor shortcuts
 alias v='nvim'
 alias e='code --wait'
+
+# Git UI
+alias lg='lazygit'
 
 # Disk usage
 alias du1='du -h --max-depth=1'
