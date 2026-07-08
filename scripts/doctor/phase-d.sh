@@ -6,7 +6,7 @@ phase_start "D" "Brewfile"
 SOURCE="$(chezmoi source-path)"
 
 # ── Brewfile declarations ─────────────────────────────────────────────────────
-for formula in neovim tmux ripgrep fd bat eza git-delta atuin starship mise gh jq yq direnv uv lazygit zoxide btop just fzf; do
+for formula in neovim tmux ripgrep fd bat eza git-delta atuin starship mise gh jq yq direnv uv lazygit zoxide btop just fzf tldr dust; do
   check "Brewfile declares $formula"
   assert_grep "^brew \"$formula\"" "$SOURCE/Brewfile"
 done
@@ -30,7 +30,7 @@ _check_cask() {
   if printf '%s\n' "$_brew_casks" | grep -qx "$cask"; then pass; else fail "brew cask '$cask' not installed"; fi
 }
 
-for formula in neovim tmux ripgrep fd bat eza git-delta atuin starship mise gh jq yq direnv uv lazygit zoxide btop just fzf; do
+for formula in neovim tmux ripgrep fd bat eza git-delta atuin starship mise gh jq yq direnv uv lazygit zoxide btop just fzf tldr dust; do
   _check_formula "$formula"
 done
 

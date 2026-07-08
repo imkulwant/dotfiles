@@ -31,6 +31,8 @@ brew "tree-sitter-cli"
 brew "jq"
 brew "yq"
 brew "btop"
+brew "tldr"
+brew "dust"
 brew "k9s"
 brew "chezmoi"
 
