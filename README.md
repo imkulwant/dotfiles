@@ -212,8 +212,8 @@ Expected output: all checks green, zero failures.
 
 | Phase | Name | Checks |
 |---|---|---|
-| C | Critical fixes | 31 |
-| D | Brewfile | 47 |
+| C | Critical fixes | 32 |
+| D | Brewfile | 49 |
 | E | Shell layer | 25 |
 | F | tmux | 10 |
 | G | Neovim | 21 |
@@ -222,8 +222,8 @@ Expected output: all checks green, zero failures.
 | J | CI + hygiene | 23 |
 | K | macOS defaults | 5 |
 | L | Advanced | 5 |
-| M | Documentation | 6 |
-| N | Final verification | 1 |
+| M | Documentation | 7 |
+| N | Final verification | 4 |
 
 ---
 
