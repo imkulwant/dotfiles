@@ -27,6 +27,7 @@ brew "mise"
 brew "uv"
 
 # ── Data & infra tools ───────────────────────────────────────────────────────
+brew "tree-sitter-cli"
 brew "jq"
 brew "yq"
 brew "btop"
