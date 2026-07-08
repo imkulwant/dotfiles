@@ -7,6 +7,8 @@ LICENSE
 # These live in the source repo but should never be written to $HOME.
 OVERHAUL_PLAN.md
 SWOT.md
+Brewfile
+docs
 scripts
 justfile
 templates

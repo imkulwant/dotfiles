@@ -64,7 +64,9 @@ check "nvim-pack-lock.json pins harpoon to harpoon2 commit (not master)"
 assert_no_grep '1bc17e3e42ea3c46b33c0bbad6a880792692a1b3' "$SOURCE/dot_config/nvim/nvim-pack-lock.json"
 
 check "nvim-pack-lock.json records harpoon2 version field"
-assert_grep '"version": "harpoon2"' "$SOURCE/dot_config/nvim/nvim-pack-lock.json"
+# vim.pack serializes the Lua source string 'harpoon2' with its literal quotes
+# into the JSON lock — accept the quoted form so source matches what nvim writes.
+assert_grep "\"version\": \"'harpoon2'\"" "$SOURCE/dot_config/nvim/nvim-pack-lock.json"
 
 check "init.lua has lazygit <leader>gg binding"
 assert_grep 'leader.*gg' "$SOURCE/dot_config/nvim/init.lua"
