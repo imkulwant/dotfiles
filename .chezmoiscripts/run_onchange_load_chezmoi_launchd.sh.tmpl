@@ -1,0 +1,14 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+# Plist hash: {{ include "private_Library/LaunchAgents/com.kulsin.chezmoi-update.plist.tmpl" | sha256sum }}
+
+PLIST="$HOME/Library/LaunchAgents/com.kulsin.chezmoi-update.plist"
+LABEL="com.kulsin.chezmoi-update"
+GUI="gui/$(id -u)"
+
+launchctl bootout "$GUI/$LABEL" 2>/dev/null || true
+launchctl bootstrap "$GUI" "$PLIST"
+
+echo "chezmoi-update launchd agent loaded."
+{{ end -}}
