@@ -3,7 +3,7 @@
 
 phase_start "N" "Final verification"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 # ── Dotfile state ─────────────────────────────────────────────────────────────
 # Scripts (run_once state tied to content hash) and externals (OMZ auto-updates)

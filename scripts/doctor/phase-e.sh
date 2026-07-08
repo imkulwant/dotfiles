@@ -3,7 +3,7 @@
 
 phase_start "E" "Shell layer"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 # ── dot_zshrc.tmpl content checks ────────────────────────────────────────────
 check "dot_zshrc.tmpl no longer sets Powerlevel10k theme"

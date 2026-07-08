@@ -3,7 +3,7 @@
 
 phase_start "L" "Advanced (conditional)"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 # ── Per-host templating ───────────────────────────────────────────────────────
 check ".chezmoidata.yaml defines host-scoped data"

@@ -3,7 +3,7 @@
 
 phase_start "J" "CI + hygiene"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 # ── pre-commit ────────────────────────────────────────────────────────────────
 check ".pre-commit-config.yaml exists"

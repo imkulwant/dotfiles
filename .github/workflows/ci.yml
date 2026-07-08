@@ -51,6 +51,8 @@ jobs:
         run: chezmoi apply --dry-run --source=. --destination=/tmp/chezmoi-home
 
       - name: just doctor C (file-content checks, no brew/macOS deps)
+        env:
+          CHEZMOI_SOURCE: ${{ github.workspace }}
         run: just doctor C
 
       - name: Formula drift check

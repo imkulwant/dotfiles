@@ -3,7 +3,7 @@
 
 phase_start "D" "Brewfile"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 # ── Brewfile declarations ─────────────────────────────────────────────────────
 for formula in neovim tmux ripgrep fd bat eza git-delta atuin starship mise gh jq yq direnv uv lazygit zoxide btop just fzf tldr dust; do

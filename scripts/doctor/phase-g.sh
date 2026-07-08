@@ -3,7 +3,7 @@
 
 phase_start "G" "Neovim"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 # ── Chezmoi tracking ──────────────────────────────────────────────────────────
 check "$HOME/.config/nvim/init.lua managed by chezmoi"

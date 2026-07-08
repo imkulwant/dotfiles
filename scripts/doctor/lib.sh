@@ -20,6 +20,13 @@ else
   C_GREEN='' C_RED='' C_YELLOW='' C_BOLD='' C_DIM='' C_RESET=''
 fi
 
+# ---------- Source path ----------
+# Allow overriding the chezmoi source path via CHEZMOI_SOURCE. This lets doctor
+# run against an arbitrary checkout (e.g. CI's $GITHUB_WORKSPACE) without
+# requiring `chezmoi init`. Falls back to `chezmoi source-path` when unset.
+CHEZMOI_SOURCE="${CHEZMOI_SOURCE:-$(chezmoi source-path)}"
+export CHEZMOI_SOURCE
+
 # ---------- Counters ----------
 DOCTOR_PASSED=0
 DOCTOR_FAILED=0

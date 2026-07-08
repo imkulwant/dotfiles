@@ -3,7 +3,7 @@
 
 phase_start "K" "macOS defaults"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 check "run_onchange_macos_defaults script exists"
 assert_file "$SOURCE/.chezmoiscripts/run_onchange_macos_defaults.sh.tmpl"

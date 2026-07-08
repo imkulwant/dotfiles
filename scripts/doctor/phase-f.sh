@@ -3,7 +3,7 @@
 
 phase_start "F" "tmux"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 check "tmux.conf exists in chezmoi source"
 assert_file "$SOURCE/dot_config/tmux/tmux.conf"

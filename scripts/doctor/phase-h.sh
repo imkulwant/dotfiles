@@ -3,7 +3,7 @@
 
 phase_start "H" "Git + SSH"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 # ── gitconfig ────────────────────────────────────────────────────────────────
 check "git user.email is set"

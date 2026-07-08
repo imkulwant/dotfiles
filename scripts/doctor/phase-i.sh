@@ -3,7 +3,7 @@
 
 phase_start "I" "mise + uv"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 # ── mise ──────────────────────────────────────────────────────────────────────
 check "mise installed"

@@ -3,7 +3,7 @@
 
 phase_start "M" "Documentation"
 
-SOURCE="$(chezmoi source-path)"
+SOURCE="$CHEZMOI_SOURCE"
 
 check "README.md exists"
 assert_file "$SOURCE/README.md"
