@@ -1,0 +1,17 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Applying macOS defaults..."
+
+# ── Dock ──────────────────────────────────────────────────────────────────────
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0.5
+defaults write com.apple.dock tilesize -int 36
+defaults write com.apple.dock show-recents -bool false
+
+killall Dock
+
+echo "macOS defaults applied."
+{{ end -}}
