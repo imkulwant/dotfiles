@@ -1,19 +1,28 @@
-# Path to Oh My Zsh
-export ZSH="$HOME/.oh-my-zsh"
-export ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
-
-# No theme — starship handles the prompt
-ZSH_THEME=""
-
-# OMZ plugins
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
-
 # Homebrew (must be early so all tools are on PATH)
 if [[ -d "/opt/homebrew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-source $ZSH/oh-my-zsh.sh
+# ── zsh plugins (formerly loaded via oh-my-zsh) ──────────────────────────────
+# Load autosuggestions and syntax-highlighting directly. Syntax-highlighting
+# must be sourced last so its widgets wrap everything else.
+ZSH_PLUGINS="$HOME/.oh-my-zsh/custom/plugins"
+[ -f "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
+  source "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# ── History (previously provided by oh-my-zsh) ───────────────────────────────
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt SHARE_HISTORY HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS \
+       INC_APPEND_HISTORY EXTENDED_HISTORY
+
+# Sensible defaults previously set by oh-my-zsh
+setopt AUTO_CD INTERACTIVE_COMMENTS
+
+# Completion system
+autoload -Uz compinit
+compinit -C
 
 # Source aliases
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
@@ -28,7 +37,28 @@ export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :50 {}'"
 # ── Tool hooks (order matters: fzf before atuin so atuin owns Ctrl-R) ─────────
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
-eval "$(mise activate zsh)"
 eval "$(direnv hook zsh)"
 source <(fzf --zsh)
 eval "$(atuin init zsh)"
+
+# ── mise: lazy-load on first use (saves ~100ms at shell start) ───────────────
+# The real activation replaces these stubs on first invocation. Aliases are
+# re-sourced after activation so user aliases (e.g. python=python3) survive.
+_mise_lazy_activate() {
+  unset -f mise node npm npx python python3 pip pip3 ruby go rustc cargo java 2>/dev/null
+  eval "$(command mise activate zsh)"
+  [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
+}
+for _cmd in mise node npm npx python python3 pip pip3 ruby go rustc cargo java; do
+  unalias "$_cmd" 2>/dev/null
+  eval "$_cmd() { _mise_lazy_activate; $_cmd \"\$@\"; }"
+done
+unset _cmd
+
+# Syntax highlighting must be sourced LAST so its ZLE widgets wrap all others.
+[ -f "$ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && \
+  source "$ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+ask() {
+  curl -s http://192.168.0.198:11434/api/generate -d "{\"model\":\"qwen3.5:0.8b\",\"prompt\":\"$1\",\"stream\":false}" | python3 -c "import sys,json;print(json.load(sys.stdin)['response'])"
+}
