@@ -85,7 +85,10 @@ assert_cmd_out "zsh -i -c 'alias ll'" "eza"
 
 check "Shell startup under 500ms"
 _start=$(date +%s%N 2>/dev/null || echo 0)
-zsh -i -c exit 2>/dev/null
+# `|| true` tolerates zsh's non-TTY exit 1 (zle init warnings). The measurement
+# itself is still valid; see Phase O's hyperfine --ignore-failure for the same
+# reason. Without this guard, set -e in run.sh kills Phase E mid-script.
+zsh -i -c exit 2>/dev/null || true
 _end=$(date +%s%N 2>/dev/null || echo 0)
 _ms=$(((_end - _start) / 1000000))
 [ "$_ms" -lt 500 ] && pass || fail "startup took ${_ms}ms (target: <500ms)"
