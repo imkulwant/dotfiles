@@ -34,7 +34,7 @@ assert_grep 'zsh-autosuggestions/archive/v[0-9]' \
   "$SOURCE/.chezmoiexternal.toml"
 
 # Sub-task 6 - VS Code settings.json version drift (SWOT bugs 7, 8)
-VSCODE_SETTINGS="$SOURCE/private_Library/private_Application Support/private_Code/User/settings.json"
+VSCODE_SETTINGS="$SOURCE/private_Library/private_Application Support/private_Code/User/settings.json.tmpl"
 
 check "VS Code settings.json no longer references openjdk@24"
 assert_no_grep 'openjdk@24' "$VSCODE_SETTINGS"
