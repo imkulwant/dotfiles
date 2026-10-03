@@ -42,6 +42,9 @@ jobs:
         run: |
           curl -sSfL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
 
+      - name: chezmoi init (seed data from prompt defaults)
+        run: chezmoi init --promptDefaults --source=.
+
       - name: Validate templates (chezmoi execute-template)
         run: |
           chezmoi execute-template --source=. < run_onchange_install-brewfile.sh.tmpl
