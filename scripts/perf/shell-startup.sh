@@ -10,7 +10,7 @@ if [[ "$budget_check" == "--budget-check" ]]; then
   tmpfile=$(mktemp)
   trap 'rm -f "$tmpfile"' EXIT
 
-  hyperfine --warmup 3 --min-runs 10 --export-json "$tmpfile" -N 'zsh -c exit' >/dev/null 2>&1
+  hyperfine --warmup 3 --min-runs 10 --export-json "$tmpfile" --ignore-failure -N 'zsh -i -c exit' >/dev/null 2>&1
 
   # Extract mean (in seconds) from JSON
   mean_seconds=$(yq eval '.results[0].mean' "$tmpfile")
@@ -29,6 +29,6 @@ if [[ "$budget_check" == "--budget-check" ]]; then
   exit 0
 else
   # No flag: run hyperfine and show output, always exit 0
-  hyperfine --warmup 3 --min-runs 10 -N 'zsh -c exit' || true
+  hyperfine --warmup 3 --min-runs 10 --ignore-failure -N 'zsh -i -c exit' || true
   exit 0
 fi
