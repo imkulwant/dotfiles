@@ -46,3 +46,11 @@ assert_grep 'launchctl bootout.*com.kulsin.chezmoi-update' \
   "$SOURCE/.chezmoiscripts/run_onchange_load_chezmoi_launchd.sh.tmpl"
 assert_grep 'local.chezmoi-update' \
   "$SOURCE/.chezmoiscripts/run_onchange_load_chezmoi_launchd.sh.tmpl"
+
+check "SSH config iterates ssh.local_hosts"
+assert_grep 'range.*ssh\.local_hosts' "$SOURCE/private_dot_ssh/private_config.tmpl"
+assert_no_grep 'User kulsin$' "$SOURCE/private_dot_ssh/private_config.tmpl"
+
+check "ask() reads endpoint from chezmoi data"
+assert_grep '\{\{ \.ask\.endpoint \}\}' "$SOURCE/dot_zshrc.tmpl"
+assert_no_grep '192\.168\.0\.198' "$SOURCE/dot_zshrc.tmpl"

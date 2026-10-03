@@ -62,7 +62,9 @@ unset _cmd
   source "$ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 ask() {
-  curl -s http://192.168.0.198:11434/api/generate -d "{\"model\":\"qwen3.5:0.8b\",\"prompt\":\"$1\",\"stream\":false}" | python3 -c "import sys,json;print(json.load(sys.stdin)['response'])"
+  local endpoint='{{ .ask.endpoint }}'
+  [[ -z "$endpoint" ]] && { echo "ask: configure ask.endpoint in ~/.config/chezmoi/chezmoi.toml"; return 1; }
+  curl -s "$endpoint/api/generate" -d "{\"model\":\"qwen3.5:0.8b\",\"prompt\":\"$1\",\"stream\":false}" | python3 -c "import sys,json;print(json.load(sys.stdin)['response'])"
 }
 
 [[ -n "${ZSH_PROFILE:-}" ]] && zprof
