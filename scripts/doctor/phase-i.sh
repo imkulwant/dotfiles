@@ -57,7 +57,7 @@ check "Brewfile no longer declares openjdk@21"
 assert_no_grep '^brew "openjdk@21"' "$SOURCE/Brewfile"
 
 # ── VS Code settings ──────────────────────────────────────────────────────────
-_vscode_settings="$SOURCE/private_Library/private_Application Support/private_Code/User/settings.json"
+_vscode_settings="$SOURCE/private_Library/private_Application Support/private_Code/User/settings.json.tmpl"
 
 check "VS Code settings.json points Java runtime at mise/installs"
 assert_grep 'mise/installs' "$_vscode_settings"
