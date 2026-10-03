@@ -4,3 +4,12 @@
 work: false
 perf:
   shell_budget_ms: 200
+ask:
+  endpoint: ""
+ssh:
+  local_hosts:
+    caduceus:
+      host: 192.168.0.100
+      user: kulsin
+automation:
+  weekly_maintenance: false
