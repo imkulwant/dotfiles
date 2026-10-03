@@ -27,6 +27,7 @@ brew "mise"
 brew "uv"
 
 # ── CI & code quality ─────────────────────────────────────────────────────────
+brew "hyperfine"
 brew "shellcheck"
 brew "shfmt"
 brew "pre-commit"

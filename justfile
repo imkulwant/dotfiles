@@ -15,3 +15,7 @@ update:
 # Run doctor sanity checks. Pass phase letters to run a subset (e.g. `just doctor C D`).
 doctor *phases='':
     scripts/doctor/run.sh {{phases}}
+
+# Benchmark zsh startup time.
+profile-shell:
+    scripts/perf/shell-startup.sh

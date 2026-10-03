@@ -1,3 +1,5 @@
+[[ -n "${ZSH_PROFILE:-}" ]] && zmodload zsh/zprof
+
 # Homebrew (must be early so all tools are on PATH)
 if [[ -d "/opt/homebrew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -62,3 +64,5 @@ unset _cmd
 ask() {
   curl -s http://192.168.0.198:11434/api/generate -d "{\"model\":\"qwen3.5:0.8b\",\"prompt\":\"$1\",\"stream\":false}" | python3 -c "import sys,json;print(json.load(sys.stdin)['response'])"
 }
+
+[[ -n "${ZSH_PROFILE:-}" ]] && zprof

@@ -36,10 +36,12 @@ On a brand-new Mac, run `xcode-select --install` before bootstrapping.
 ## Day-to-day
 
 ```sh
-just apply    # chezmoi apply — write source → home
-just verify   # chezmoi verify — assert home matches source
-just update   # chezmoi update — git pull + apply
-just doctor   # run all phase checks (see Verification below)
+just apply         # chezmoi apply — write source → home
+just verify        # chezmoi verify — assert home matches source
+just update        # chezmoi update — git pull + apply
+just doctor        # run all phase checks (see Verification below)
+just profile-shell # benchmark zsh startup time
+ZSH_PROFILE=1 zsh  # print zsh profiling output (zprof)
 ```
 
 Full chezmoi command reference: [`docs/chezmoi-cheatsheet.md`](docs/chezmoi-cheatsheet.md).

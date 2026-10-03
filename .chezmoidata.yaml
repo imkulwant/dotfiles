@@ -2,3 +2,5 @@
 # Usage in templates: {{ if .work }}...{{ end }}
 # Hostname available via built-in: {{ .chezmoi.hostname }} (e.g. "panzer.local")
 work: false
+perf:
+  shell_budget_ms: 200
