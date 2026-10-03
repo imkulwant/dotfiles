@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.kulsin.chezmoi-update</string>
+    <string>local.chezmoi-update</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/opt/homebrew/bin/chezmoi</string>
+        <string>{{ lookPath "chezmoi" }}</string>
         <string>update</string>
         <string>--no-tty</string>
     </array>

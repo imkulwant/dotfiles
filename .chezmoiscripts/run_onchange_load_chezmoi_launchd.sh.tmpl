@@ -1,10 +1,17 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env bash
 set -euo pipefail
-# Plist hash: {{ include "private_Library/LaunchAgents/com.kulsin.chezmoi-update.plist.tmpl" | sha256sum }}
 
-PLIST="$HOME/Library/LaunchAgents/com.kulsin.chezmoi-update.plist"
-LABEL="com.kulsin.chezmoi-update"
+# Legacy agent cleanup: bootout and remove the old com.kulsin.chezmoi-update agent.
+# Idempotent — safe when the legacy label was never loaded.
+launchctl bootout "gui/$UID" com.kulsin.chezmoi-update 2>/dev/null || true
+launchctl bootout "user/$UID" com.kulsin.chezmoi-update 2>/dev/null || true
+rm -f "$HOME/Library/LaunchAgents/com.kulsin.chezmoi-update.plist"
+
+# Plist hash: {{ include "private_Library/LaunchAgents/local.chezmoi-update.plist.tmpl" | sha256sum }}
+
+PLIST="$HOME/Library/LaunchAgents/local.chezmoi-update.plist"
+LABEL="local.chezmoi-update"
 UID_="$(id -u)"
 
 # Prefer the user domain: works over SSH, during initial setup before Aqua

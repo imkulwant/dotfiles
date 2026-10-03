@@ -32,3 +32,17 @@ assert_no_file "$SOURCE/private_Library/private_Application Support/private_Code
 check "VS Code Java path uses chezmoi.homeDir"
 assert_grep '\{\{ \.chezmoi\.homeDir \}\}/.local/share/mise/installs/java/temurin-21' \
   "$SOURCE/private_Library/private_Application Support/private_Code/User/settings.json.tmpl"
+
+check "chezmoi-update plist renamed to local.chezmoi-update"
+assert_file "$SOURCE/private_Library/LaunchAgents/local.chezmoi-update.plist.tmpl"
+assert_no_file "$SOURCE/private_Library/LaunchAgents/com.kulsin.chezmoi-update.plist.tmpl"
+assert_grep '<string>local.chezmoi-update</string>' \
+  "$SOURCE/private_Library/LaunchAgents/local.chezmoi-update.plist.tmpl"
+assert_grep 'lookPath "chezmoi"' \
+  "$SOURCE/private_Library/LaunchAgents/local.chezmoi-update.plist.tmpl"
+
+check "run_onchange_load_chezmoi_launchd bootouts legacy label"
+assert_grep 'launchctl bootout.*com.kulsin.chezmoi-update' \
+  "$SOURCE/.chezmoiscripts/run_onchange_load_chezmoi_launchd.sh.tmpl"
+assert_grep 'local.chezmoi-update' \
+  "$SOURCE/.chezmoiscripts/run_onchange_load_chezmoi_launchd.sh.tmpl"
