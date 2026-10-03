@@ -54,3 +54,18 @@ assert_no_grep 'User kulsin$' "$SOURCE/private_dot_ssh/private_config.tmpl"
 check "ask() reads endpoint from chezmoi data"
 assert_grep '\{\{ \.ask\.endpoint \}\}' "$SOURCE/dot_zshrc.tmpl"
 assert_no_grep '192\.168\.0\.198' "$SOURCE/dot_zshrc.tmpl"
+
+check "externals drop OMZ and p10k"
+assert_no_grep '\.oh-my-zsh' "$SOURCE/.chezmoiexternal.toml"
+assert_no_grep 'powerlevel10k' "$SOURCE/.chezmoiexternal.toml"
+
+check "externals point zsh plugins to .local/share/zsh-plugins"
+assert_grep '\.local/share/zsh-plugins/zsh-syntax-highlighting' "$SOURCE/.chezmoiexternal.toml"
+assert_grep '\.local/share/zsh-plugins/zsh-autosuggestions' "$SOURCE/.chezmoiexternal.toml"
+
+check "zshrc sources plugins from the new location"
+assert_grep '\.local/share/zsh-plugins' "$SOURCE/dot_zshrc.tmpl"
+assert_no_grep 'oh-my-zsh/custom/plugins' "$SOURCE/dot_zshrc.tmpl"
+
+check ".chezmoiignore has no oh-my-zsh patterns"
+assert_no_grep 'oh-my-zsh' "$SOURCE/.chezmoiignore"
