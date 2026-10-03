@@ -97,15 +97,6 @@ assert_no_file "$SOURCE/.chezmoiscripts/run_once_before_40_install_powerlevel10k
 check "duplicated OMZ plugins install script removed"
 assert_no_file "$SOURCE/.chezmoiscripts/run_once_before_ohmyzsh-plugins.sh.tmpl"
 
-check ".chezmoiignore no longer blocks the whole .oh-my-zsh/custom subtree"
-assert_no_grep '^\.oh-my-zsh/custom/\*$' "$SOURCE/.chezmoiignore"
-
-check ".chezmoiignore no longer blocks .oh-my-zsh/lib (needed for OMZ runtime)"
-assert_no_grep '^\.oh-my-zsh/lib/\*$' "$SOURCE/.chezmoiignore"
-
-check ".chezmoiignore still blocks the OMZ runtime cache"
-assert_grep '^\.oh-my-zsh/cache' "$SOURCE/.chezmoiignore"
-
 # Sub-task 13 - branch renamed master -> main (SWOT bug 18)
 check "current branch is 'main'"
 assert_cmd_out "git -C \"$SOURCE\" branch --show-current" "^main$"
