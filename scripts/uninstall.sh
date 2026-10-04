@@ -145,7 +145,12 @@ fi
 step 5 "reset login shell to /bin/zsh (if currently Homebrew zsh)"
 current_shell=$(dscl . -read "/Users/$(whoami)" UserShell 2>/dev/null | awk '{print $2}' || echo "")
 if [[ "$current_shell" == /opt/homebrew/* || "$current_shell" == /usr/local/* ]]; then
-  run chsh -s /bin/zsh
+  if [[ -t 0 ]] || ((dry_run)); then
+    run chsh -s /bin/zsh
+  else
+    echo "  skipped: chsh requires an interactive TTY (login shell left at $current_shell)"
+    echo "  re-run uninstall from Terminal.app, or run 'chsh -s /bin/zsh' manually."
+  fi
 else
   echo "  current shell is $current_shell; no change"
 fi
