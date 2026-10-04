@@ -110,8 +110,12 @@ else
   done <"$MANAGED_LIST"
   if [[ -s "$existing_backup_list" ]]; then
     run tar -czf "$backup" -C "$HOME" -T "$existing_backup_list"
-    echo "  → $backup"
-    backup_written="$backup"
+    if ((dry_run)); then
+      echo "  → $backup (would be created)"
+    else
+      echo "  → $backup"
+      backup_written="$backup"
+    fi
   else
     echo "  no managed files found in HOME; nothing to back up"
   fi
@@ -156,7 +160,12 @@ done <"$MANAGED_LIST"
 
 # Step 7: Remove chezmoi source and state directories
 step 7 "remove chezmoi source and state directories"
-run rm -rf "$HOME/.local/share/chezmoi" "$HOME/.config/chezmoi" "$HOME/.cache/chezmoi"
+for d in \
+  "$HOME/.local/share/chezmoi" \
+  "$HOME/.config/chezmoi" \
+  "$HOME/.cache/chezmoi"; do
+  [[ -d "$d" ]] && run rm -rf "$d"
+done
 
 # Step 8: Optional brew bundle cleanup
 step 8 "optional: brew bundle cleanup (--purge-brew)"
