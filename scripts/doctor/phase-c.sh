@@ -13,7 +13,8 @@ assert_grep '/Brewfile"' "$SOURCE/run_onchange_install-brewfile.sh.tmpl"
 check "run_onchange script no longer references 'BrewFile' (wrong casing)"
 assert_no_grep 'BrewFile' "$SOURCE/run_onchange_install-brewfile.sh.tmpl"
 
-# Sub-task 2 - install.sh removed; chezmoi init --apply is the sole bootstrap
+# Sub-task 2 - root-level install.sh stays removed. scripts/install.sh (Task 9,
+# commit 79f01fa) is the new entry-point wrapper around chezmoi's bootstrap.
 check "install.sh has been removed"
 assert_no_file "$SOURCE/install.sh"
 
