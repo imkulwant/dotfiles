@@ -55,3 +55,6 @@ while read -r _domain key _type _value; do
   grep -qF "$key" "$SOURCE/docs/features.md" || _missing_keys+=("$_domain.$key")
 done <"$SOURCE/scripts/macos-defaults-keys.txt"
 if [[ ${#_missing_keys[@]} -eq 0 ]]; then pass; else fail "unlisted: ${_missing_keys[*]}"; fi
+
+check "CI validates uninstall --dry-run"
+assert_grep 'uninstall\.sh --dry-run' "$SOURCE/.github/workflows/ci.yml"

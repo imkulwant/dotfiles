@@ -24,10 +24,10 @@ jobs:
           chmod +x /usr/local/bin/shfmt
 
       - name: shellcheck
-        run: find scripts/doctor -name '*.sh' -exec shellcheck --severity=warning {} +
+        run: find scripts -name '*.sh' -exec shellcheck --severity=warning {} +
 
       - name: shfmt
-        run: find scripts/doctor -name '*.sh' -exec shfmt -d -i 2 {} +
+        run: find scripts -name '*.sh' -exec shfmt -d -i 2 {} +
 
   validate:
     name: Validate chezmoi config
@@ -52,6 +52,9 @@ jobs:
 
       - name: chezmoi apply --dry-run
         run: chezmoi apply --dry-run --source=. --destination=/tmp/chezmoi-home
+
+      - name: Validate uninstall script (dry-run)
+        run: scripts/uninstall.sh --dry-run --yes
 
       - name: just doctor C (file-content checks, no brew/macOS deps)
         env:
