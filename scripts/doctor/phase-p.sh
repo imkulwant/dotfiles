@@ -110,6 +110,6 @@ if ! find "$SOURCE" -type f \
   xargs -0 grep -lE '/Users/kulsin' >/dev/null 2>&1; then
   pass # grep found no hits in non-docs tree -> allowlist is working
 else
-  fail "allowlist broken: non-docs file contains /Users/kulsin"
+  fail "allowlist broken: docs probe triggered guard"
 fi
 rm -f "$SOURCE/docs/.phase-p-probe"
