@@ -1,5 +1,9 @@
 # Chezmoi dotfiles task runner.
 
+# Bootstrap or re-apply the dotfiles (idempotent)
+install:
+    scripts/install.sh
+
 # Apply managed dotfiles to $HOME.
 apply:
     chezmoi apply

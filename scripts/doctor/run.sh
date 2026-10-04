@@ -14,7 +14,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib.sh"
 
 # Ordered phase letters. Update when new phases are added.
-ALL_PHASES=(a c d e f g h i j k l m n)
+ALL_PHASES=(a c d e f g h i j k l m n r)
 
 if [ "$#" -eq 0 ]; then
   PHASES=("${ALL_PHASES[@]}")

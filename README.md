@@ -11,7 +11,7 @@ language toolchains, and macOS system settings — as version-controlled source.
 ### Fresh Mac
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply imkulwant
+curl -fsSL https://raw.githubusercontent.com/imkulwant/dotfiles/main/scripts/install.sh | bash
 ```
 
 That single command:
@@ -22,20 +22,15 @@ That single command:
 4. Applies all managed files to `$HOME`.
 5. Runs `run_onchange_*` scripts (Brewfile install, macOS defaults, launchd agent).
 
-No `install.sh` is needed.
-`chezmoi init --apply` is the only bootstrap entrypoint.
-
-### Prerequisites
-
-The bootstrap script handles everything, but a working internet connection
-and Xcode Command Line Tools are required.
-On a brand-new Mac, run `xcode-select --install` before bootstrapping.
+The install script includes pre-flight checks (macOS version, Xcode CLT, network, disk space)
+and is idempotent: running it again on an already-installed system applies any new changes.
 
 ---
 
 ## Day-to-day
 
 ```sh
+just install       # bootstrap or re-apply (idempotent); runs pre-flight checks
 just apply         # chezmoi apply — write source → home
 just verify        # chezmoi verify — assert home matches source
 just update        # chezmoi update — git pull + apply

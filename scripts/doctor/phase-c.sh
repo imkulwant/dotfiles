@@ -18,7 +18,7 @@ check "install.sh has been removed"
 assert_no_file "$SOURCE/install.sh"
 
 check "README documents the chezmoi bootstrap one-liner"
-assert_grep 'chezmoi init --apply|chezmoi.io.*init --apply|get.chezmoi.io' \
+assert_grep 'chezmoi init --apply|chezmoi.io.*init --apply|get.chezmoi.io|install.sh' \
   "$SOURCE/README.md"
 
 # Sub-task 4 - .chezmoiexternal.toml pinned to immutable refs (no master.tar.gz)

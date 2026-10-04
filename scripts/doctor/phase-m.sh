@@ -9,7 +9,7 @@ check "README.md exists"
 assert_file "$SOURCE/README.md"
 
 check "README.md contains bootstrap one-liner"
-assert_grep 'chezmoi init --apply' "$SOURCE/README.md"
+assert_grep 'chezmoi init --apply|install.sh' "$SOURCE/README.md"
 
 check "README.md is non-trivial (>200 lines)"
 assert_cmd_ok "[ \"$(wc -l <"$SOURCE/README.md")\" -gt 200 ]"
