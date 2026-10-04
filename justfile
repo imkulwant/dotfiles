@@ -4,6 +4,10 @@
 install:
     scripts/install.sh
 
+# Uninstall the dotfiles (destructive). Pass flags, e.g. `just uninstall '--dry-run'`.
+uninstall *args='':
+    scripts/uninstall.sh {{args}}
+
 # Apply managed dotfiles to $HOME.
 apply:
     chezmoi apply
