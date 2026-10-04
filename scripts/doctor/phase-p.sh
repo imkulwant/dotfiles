@@ -69,3 +69,47 @@ assert_no_grep 'oh-my-zsh/custom/plugins' "$SOURCE/dot_zshrc.tmpl"
 
 check ".chezmoiignore has no oh-my-zsh patterns"
 assert_no_grep 'oh-my-zsh' "$SOURCE/.chezmoiignore"
+
+check "no hardcoded personal identity outside docs/"
+# Allowlist: docs/, .git/, phase-p.sh itself (needs to spell the patterns),
+# lock files (*-lock.json may legitimately pin github username),
+# .chezmoi.toml.tmpl (prompt default literal lives there by design),
+# .claude/ and .superpowers/ (user config and metadata, not managed).
+if ! find "$SOURCE" -type f \
+  -not -path "$SOURCE/docs/*" \
+  -not -path "$SOURCE/.git/*" \
+  -not -path "$SOURCE/.claude/*" \
+  -not -path "$SOURCE/.superpowers/*" \
+  -not -path "$SOURCE/scripts/doctor/phase-p.sh" \
+  -not -name '.chezmoi.toml.tmpl' \
+  -not -name '*-lock.json' \
+  -print0 |
+  xargs -0 grep -lE '/Users/kulsin|kulsin@|singh\.kulwant@gmx' >/tmp/phase-p-hits 2>/dev/null; then
+  : # grep -l exited 1 -> no files matched -> good
+fi
+if [ -s /tmp/phase-p-hits ]; then
+  fail "hardcoded identity found: $(tr '\n' ' ' </tmp/phase-p-hits)"
+else
+  pass
+fi
+rm -f /tmp/phase-p-hits
+
+check "grep guard allowlist does not false-positive on docs (Review Focus #5)"
+# Sanity: a docs/ file is allowed to contain kulsin. Create a probe, run
+# the SAME guard logic, confirm the probe does NOT trip the guard, delete it.
+echo '/Users/kulsin probe' >"$SOURCE/docs/.phase-p-probe"
+if ! find "$SOURCE" -type f \
+  -not -path "$SOURCE/docs/*" \
+  -not -path "$SOURCE/.git/*" \
+  -not -path "$SOURCE/.claude/*" \
+  -not -path "$SOURCE/.superpowers/*" \
+  -not -path "$SOURCE/scripts/doctor/phase-p.sh" \
+  -not -name '.chezmoi.toml.tmpl' \
+  -not -name '*-lock.json' \
+  -print0 |
+  xargs -0 grep -lE '/Users/kulsin' >/dev/null 2>&1; then
+  pass # grep found no hits in non-docs tree -> allowlist is working
+else
+  fail "allowlist broken: non-docs file contains /Users/kulsin"
+fi
+rm -f "$SOURCE/docs/.phase-p-probe"
