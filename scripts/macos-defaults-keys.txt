@@ -1,0 +1,10 @@
+# macOS defaults applied by run_onchange_macos_defaults.sh.tmpl.
+# Same keys consumed by scripts/uninstall.sh (Task 10) for revert loop.
+# Format: <domain> <key> <type> <value>
+# Types: bool, int, float, string
+
+com.apple.dock autohide bool true
+com.apple.dock autohide-delay float 0
+com.apple.dock autohide-time-modifier float 0.5
+com.apple.dock tilesize int 36
+com.apple.dock show-recents bool false

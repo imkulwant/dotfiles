@@ -1,17 +1,18 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env bash
+# Hash: {{ include "scripts/macos-defaults-keys.txt" | sha256sum }}
 set -euo pipefail
 
 echo "Applying macOS defaults..."
 
-# ── Dock ──────────────────────────────────────────────────────────────────────
-defaults write com.apple.dock autohide -bool true
-defaults write com.apple.dock autohide-delay -float 0
-defaults write com.apple.dock autohide-time-modifier -float 0.5
-defaults write com.apple.dock tilesize -int 36
-defaults write com.apple.dock show-recents -bool false
+KEYS_FILE="{{ .chezmoi.sourceDir }}/scripts/macos-defaults-keys.txt"
 
-killall Dock
+while read -r domain key type value; do
+  [[ -z "$domain" || "$domain" =~ ^# ]] && continue
+  defaults write "$domain" "$key" "-$type" "$value"
+done <"$KEYS_FILE"
+
+killall Dock 2>/dev/null || true
 
 echo "macOS defaults applied."
 {{ end -}}
