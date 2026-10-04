@@ -8,6 +8,20 @@ install:
 uninstall *args='':
     scripts/uninstall.sh {{args}}
 
+# Upgrade package managers in a sensible order. Prints what runs.
+upgrade-all:
+    brew update && brew upgrade && brew cleanup
+    mise upgrade
+    chezmoi update
+
+# Rotate atuin history DB snapshot (keeps 8 newest in ~/Library/Backups/atuin/).
+backup-atuin:
+    scripts/maintenance/atuin-backup.sh
+
+# Composite: run upgrades, rotate atuin, then doctor.
+maintain: upgrade-all backup-atuin
+    just doctor
+
 # Apply managed dotfiles to $HOME.
 apply:
     chezmoi apply
