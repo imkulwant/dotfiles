@@ -32,3 +32,36 @@ assert_grep 'local\.weekly-maintenance' \
 check "toggle load/unload is clean (Review Focus #4)"
 assert_grep 'launchctl bootstrap' "$SOURCE/.chezmoiscripts/run_onchange_load_weekly_maintenance_launchd.sh.tmpl"
 assert_grep 'launchctl bootout' "$SOURCE/.chezmoiscripts/run_onchange_load_weekly_maintenance_launchd.sh.tmpl"
+
+check "brew bundle check clean"
+assert_cmd_ok "brew bundle check --no-upgrade --file $SOURCE/Brewfile"
+
+check "no dead symlinks in ~/.local/bin"
+set +e
+_dead=$(find -L "$HOME/.local/bin" -maxdepth 1 -type l 2>/dev/null | grep -v '/chezmoi$' | wc -l | tr -d ' ')
+set -e
+if [[ "$_dead" -eq 0 ]]; then
+  pass
+else
+  fail "$_dead dead symlink(s) in $HOME/.local/bin"
+fi
+
+check "atuin DB size sane (< 1 GB; warn >= 500 MB)"
+_db="$HOME/.local/share/atuin/history.db"
+if [[ ! -f "$_db" ]]; then
+  info "atuin DB not yet created"
+  pass
+else
+  _size=$(stat -f %z "$_db" 2>/dev/null || stat -c %s "$_db" 2>/dev/null || echo 0)
+  if [[ "$_size" -ge 1073741824 ]]; then
+    fail "atuin DB is ${_size} bytes (>= 1 GB)"
+  elif [[ "$_size" -ge 524288000 ]]; then
+    info "atuin DB is ${_size} bytes (>= 500 MB) — consider rotating"
+    pass
+  else
+    pass
+  fi
+fi
+
+check "scripts/maintenance/ dir exists"
+assert_dir "$SOURCE/scripts/maintenance"
