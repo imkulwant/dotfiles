@@ -1,0 +1,33 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+# Load/unload the weekly-maintenance launchd agent based on
+# .automation.weekly_maintenance.
+# Plist hash: {{ include "private_Library/LaunchAgents/local.weekly-maintenance.plist.tmpl" | sha256sum }}
+set -euo pipefail
+
+PLIST="$HOME/Library/LaunchAgents/local.weekly-maintenance.plist"
+LABEL="local.weekly-maintenance"
+UID_="$(id -u)"
+
+{{ if .automation.weekly_maintenance -}}
+# Flag is true: ensure the agent is loaded.
+# Clear any stale bootstrap in either domain before re-loading.
+launchctl bootout "user/$UID_/$LABEL" 2>/dev/null || true
+launchctl bootout "gui/$UID_/$LABEL" 2>/dev/null || true
+
+if launchctl bootstrap "user/$UID_" "$PLIST" 2>/dev/null; then
+  echo "weekly-maintenance launchd agent loaded (user/$UID_)."
+elif launchctl bootstrap "gui/$UID_" "$PLIST" 2>/dev/null; then
+  echo "weekly-maintenance launchd agent loaded (gui/$UID_)."
+else
+  echo "weekly-maintenance launchd agent could not be loaded; skipping." >&2
+  echo "  (set .automation.weekly_maintenance to false if this is a locked-down host)" >&2
+  launchctl bootstrap "user/$UID_" "$PLIST" 2>&1 | sed 's/^/  /' >&2 || true
+fi
+{{ else -}}
+# Flag is false: ensure the agent is unloaded and plist file removed.
+launchctl bootout "user/$UID_/$LABEL" 2>/dev/null || true
+launchctl bootout "gui/$UID_/$LABEL" 2>/dev/null || true
+rm -f "$PLIST"
+{{ end -}}
+{{ end -}}
