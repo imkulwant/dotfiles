@@ -10,8 +10,8 @@ no_backup=0
 purge_brew=0
 purge_data=0
 
-usage() {
-  cat >&2 <<EOF
+_usage_text() {
+  cat <<EOF
 usage: $(basename "$0") [--yes] [--dry-run] [--no-backup] [--purge-brew] [--purge-data]
 
 Flags:
@@ -21,7 +21,16 @@ Flags:
   --purge-brew   Also run brew bundle cleanup --force against this Brewfile.
   --purge-data   Also remove shell history / atuin DB / mise & nvim installs.
 EOF
+}
+
+usage() {
+  _usage_text >&2
   exit 2
+}
+
+help() {
+  _usage_text
+  exit 0
 }
 
 while [[ $# -gt 0 ]]; do
@@ -31,7 +40,7 @@ while [[ $# -gt 0 ]]; do
   --no-backup) no_backup=1 ;;
   --purge-brew) purge_brew=1 ;;
   --purge-data) purge_data=1 ;;
-  -h | --help) usage ;;
+  -h | --help) help ;;
   *)
     echo "unknown flag: $1" >&2
     usage
@@ -77,10 +86,10 @@ fi
 # Step 1: Capture managed-file list and cache Brewfile
 step 1 "capture managed-file list and cache Brewfile"
 MANAGED_LIST=$(mktemp)
-trap 'rm -f "$MANAGED_LIST"' EXIT
+BREWFILE_CACHE=$(mktemp)
+trap 'rm -f "$MANAGED_LIST" "$BREWFILE_CACHE"' EXIT
 chezmoi managed >"$MANAGED_LIST" 2>/dev/null || true
 
-BREWFILE_CACHE=$(mktemp)
 if [[ -f "$HOME/.local/share/chezmoi/Brewfile" ]]; then
   cp "$HOME/.local/share/chezmoi/Brewfile" "$BREWFILE_CACHE"
 fi
@@ -95,7 +104,7 @@ else
   # Build an existing-files-only list (chezmoi managed may list files that
   # were removed manually; skip them so tar doesn't error).
   existing_backup_list=$(mktemp)
-  trap 'rm -f "$MANAGED_LIST" "$existing_backup_list"' EXIT
+  trap 'rm -f "$MANAGED_LIST" "$BREWFILE_CACHE" "$existing_backup_list"' EXIT
   while IFS= read -r rel; do
     [[ -e "$HOME/$rel" ]] && printf '%s\n' "$rel" >>"$existing_backup_list"
   done <"$MANAGED_LIST"
