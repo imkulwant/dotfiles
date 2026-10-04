@@ -104,27 +104,9 @@ Full chezmoi command reference: [`docs/chezmoi-cheatsheet.md`](docs/chezmoi-chea
 
 ## Tool stack
 
-| Layer | Tool | Replaces |
-|---|---|---|
-| Dotfiles | chezmoi | bare git |
-| Packages | Homebrew + Brewfile | ad-hoc installs |
-| Shell prompt | Starship | Powerlevel10k |
-| Shell history | Atuin | plain HISTFILE |
-| Multiplexer | tmux | - |
-| Editor | Neovim (kickstart.nvim) | - |
-| Java | mise + Temurin 21 | jenv + Homebrew openjdk@21 |
-| Python | uv | pyenv + pipx |
-| Git pager | delta (side-by-side) | less |
-| Git UI | lazygit | - |
-| File listing | eza | ls |
-| Cat | bat | cat |
-| Fuzzy find | fzf + fd | find |
-| Directory jump | zoxide | cd |
-| Process monitor | btop | top |
-| Task runner | just | make |
-| Linter | shellcheck + shfmt | - |
+The complete, categorized inventory lives in [`docs/features.md`](docs/features.md) — a scannable reference of every tool, plugin, LSP, Brew formula, macOS default key, and launchd agent this repo installs, with per-row pointers to where each is configured.
 
-Design rationale for each choice: [`docs/CHOICES.md`](docs/CHOICES.md).
+Design rationale for each major choice: [`docs/CHOICES.md`](docs/CHOICES.md).
 
 ---
 

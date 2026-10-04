@@ -35,3 +35,23 @@ assert_cmd_out "$SOURCE/scripts/uninstall.sh --dry-run --yes" 'step 10 of 10'
 
 check "uninstall tolerates missing atuin DB under --purge-data (Review Focus #2)"
 assert_cmd_ok "$SOURCE/scripts/uninstall.sh --dry-run --yes --purge-data"
+
+check "docs/features.md exists"
+assert_file "$SOURCE/docs/features.md"
+
+check "features.md names every Brewfile formula"
+_missing_formulae=()
+while IFS= read -r line; do
+  formula=$(printf '%s' "$line" | sed -E 's/^brew "([^"]+)".*/\1/')
+  [[ -z "$formula" ]] && continue
+  grep -qF "$formula" "$SOURCE/docs/features.md" || _missing_formulae+=("$formula")
+done < <(grep '^brew "' "$SOURCE/Brewfile")
+if [[ ${#_missing_formulae[@]} -eq 0 ]]; then pass; else fail "unlisted: ${_missing_formulae[*]}"; fi
+
+check "features.md references every macos-defaults key"
+_missing_keys=()
+while read -r _domain key _type _value; do
+  [[ -z "$_domain" || "$_domain" =~ ^# ]] && continue
+  grep -qF "$key" "$SOURCE/docs/features.md" || _missing_keys+=("$_domain.$key")
+done <"$SOURCE/scripts/macos-defaults-keys.txt"
+if [[ ${#_missing_keys[@]} -eq 0 ]]; then pass; else fail "unlisted: ${_missing_keys[*]}"; fi
