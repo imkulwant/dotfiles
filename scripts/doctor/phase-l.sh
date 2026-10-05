@@ -5,13 +5,6 @@ phase_start "L" "Advanced (conditional)"
 
 SOURCE="$CHEZMOI_SOURCE"
 
-# ── Per-host templating ───────────────────────────────────────────────────────
-check ".chezmoidata.yaml defines host-scoped data"
-assert_grep 'work' "$SOURCE/.chezmoidata.yaml"
-
-check "chezmoi execute-template resolves .work variable"
-assert_cmd_ok "chezmoi execute-template '{{ .work }}'"
-
 # ── launchd auto-update ───────────────────────────────────────────────────────
 check "chezmoi-update plist managed by chezmoi"
 assert_file "$SOURCE/private_Library/LaunchAgents/local.chezmoi-update.plist.tmpl"

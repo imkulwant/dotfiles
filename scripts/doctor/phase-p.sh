@@ -5,25 +5,11 @@ phase_start "P" "Portability (multi-username / multi-host)"
 
 SOURCE="$CHEZMOI_SOURCE"
 
-check ".chezmoi.toml.tmpl defines all four prompts"
-assert_grep 'promptStringOnce .* "name"' "$SOURCE/.chezmoi.toml.tmpl"
-assert_grep 'promptStringOnce .* "email"' "$SOURCE/.chezmoi.toml.tmpl"
-assert_grep 'promptStringOnce .* "github_user"' "$SOURCE/.chezmoi.toml.tmpl"
-assert_grep 'promptBoolOnce .* "work"' "$SOURCE/.chezmoi.toml.tmpl"
+check "no .chezmoi.toml.tmpl (setup asks no questions)"
+assert_no_file "$SOURCE/.chezmoi.toml.tmpl"
 
-check "defaults declared for all four prompts (Review Focus #3)"
-assert_grep 'promptStringOnce.*"name".*"Kulwant Singh"' "$SOURCE/.chezmoi.toml.tmpl"
-assert_grep 'promptStringOnce.*"email".*"singh\.kulwant@gmx\.com"' "$SOURCE/.chezmoi.toml.tmpl"
-assert_grep 'promptStringOnce.*"github_user".*"imkulwant"' "$SOURCE/.chezmoi.toml.tmpl"
-assert_grep 'promptBoolOnce.*"work".*false' "$SOURCE/.chezmoi.toml.tmpl"
-
-check ".chezmoidata.yaml has ask.endpoint and ssh.local_hosts"
+check ".chezmoidata.yaml has ask.endpoint"
 assert_grep 'ask:' "$SOURCE/.chezmoidata.yaml"
-assert_grep 'local_hosts:' "$SOURCE/.chezmoidata.yaml"
-
-check "dot_gitconfig.tmpl uses templated identity"
-assert_grep 'name = \{\{ \.name \}\}' "$SOURCE/dot_gitconfig.tmpl"
-assert_grep 'email = \{\{ \.email \}\}' "$SOURCE/dot_gitconfig.tmpl"
 
 check "VS Code settings.json is now a template"
 assert_file "$SOURCE/private_Library/private_Application Support/private_Code/User/settings.json.tmpl"
@@ -47,10 +33,6 @@ assert_grep 'launchctl bootout.*com.kulsin.chezmoi-update' \
 assert_grep 'local.chezmoi-update' \
   "$SOURCE/.chezmoiscripts/run_onchange_load_chezmoi_launchd.sh.tmpl"
 
-check "SSH config iterates ssh.local_hosts"
-assert_grep 'range.*ssh\.local_hosts' "$SOURCE/private_dot_ssh/private_config.tmpl"
-assert_no_grep 'User kulsin$' "$SOURCE/private_dot_ssh/private_config.tmpl"
-
 check "ask() reads endpoint from chezmoi data"
 assert_grep '\{\{ \.ask\.endpoint \}\}' "$SOURCE/dot_zshrc.tmpl"
 assert_no_grep '192\.168\.0\.198' "$SOURCE/dot_zshrc.tmpl"
@@ -73,7 +55,6 @@ assert_no_grep 'oh-my-zsh' "$SOURCE/.chezmoiignore"
 check "no hardcoded personal identity outside docs/"
 # Allowlist: docs/, .git/, phase-p.sh itself (needs to spell the patterns),
 # lock files (*-lock.json may legitimately pin github username),
-# .chezmoi.toml.tmpl (prompt default literal lives there by design),
 # .claude/ and .superpowers/ (user config and metadata, not managed).
 if ! find "$SOURCE" -type f \
   -not -path "$SOURCE/docs/*" \
@@ -81,7 +62,6 @@ if ! find "$SOURCE" -type f \
   -not -path "$SOURCE/.claude/*" \
   -not -path "$SOURCE/.superpowers/*" \
   -not -path "$SOURCE/scripts/doctor/phase-p.sh" \
-  -not -name '.chezmoi.toml.tmpl' \
   -not -name '*-lock.json' \
   -print0 |
   xargs -0 grep -lE '/Users/kulsin|kulsin@|singh\.kulwant@gmx' >/tmp/phase-p-hits 2>/dev/null; then
@@ -104,7 +84,6 @@ if ! find "$SOURCE" -type f \
   -not -path "$SOURCE/.claude/*" \
   -not -path "$SOURCE/.superpowers/*" \
   -not -path "$SOURCE/scripts/doctor/phase-p.sh" \
-  -not -name '.chezmoi.toml.tmpl' \
   -not -name '*-lock.json' \
   -print0 |
   xargs -0 grep -lE '/Users/kulsin' >/dev/null 2>&1; then

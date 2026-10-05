@@ -48,7 +48,7 @@ Full chezmoi command reference: [`docs/chezmoi-cheatsheet.md`](docs/chezmoi-chea
 ```
 ~/.local/share/chezmoi/
 ├── .chezmoiexternal.toml        # pinned tarballs: OMZ, zsh plugins
-├── .chezmoidata.yaml            # per-host template data (work boolean)
+├── .chezmoidata.yaml            # template data (shell budget, ask endpoint, automation flags)
 ├── .chezmoiignore               # files chezmoi must not touch
 ├── .pre-commit-config.yaml      # shellcheck + shfmt + hygiene hooks
 ├── .github/workflows/ci.yml     # lint + validate on every push
@@ -65,7 +65,6 @@ Full chezmoi command reference: [`docs/chezmoi-cheatsheet.md`](docs/chezmoi-chea
 │
 ├── dot_zshrc.tmpl               # zsh config (starship, atuin, mise, direnv, fzf, zoxide)
 ├── dot_aliases.zsh.tmpl         # shell aliases
-├── dot_gitconfig.tmpl           # git: delta pager, SSH rewrite, rerere, zdiff3
 │
 ├── private_Library/
 │   ├── Application Support/Code/User/settings.json   # VS Code settings
@@ -78,8 +77,6 @@ Full chezmoi command reference: [`docs/chezmoi-cheatsheet.md`](docs/chezmoi-chea
 │   ├── starship.toml            # prompt config
 │   ├── atuin/config.toml        # fuzzy history search
 │   └── lazygit/config.yml       # delta pager integration
-│
-├── dot_ssh/config               # SSH: keychain, github.com block
 │
 ├── templates/                   # project starters (not applied to HOME)
 │   ├── .mise.toml
@@ -135,12 +132,15 @@ Design rationale for each major choice: [`docs/CHOICES.md`](docs/CHOICES.md).
 `.chezmoidata.yaml` exposes custom variables to all `.tmpl` files:
 
 ```yaml
-work: false   # set to true on a work machine
+automation:
+  weekly_maintenance: false   # set to true to load the weekly maintenance agent
 ```
+
+Setup asks no questions; there is no `.chezmoi.toml.tmpl`.
 
 Built-in variables also available in templates:
 
-- `{{ .chezmoi.hostname }}` — e.g. `panzer.local`
+- `{{ .chezmoi.hostname }}` — e.g. `my-mac` (hostname up to the first dot)
 - `{{ .chezmoi.os }}` — `darwin` on macOS
 - `{{ .chezmoi.homeDir }}` — `$HOME`
 - `{{ .chezmoi.username }}` — your Unix username
@@ -148,8 +148,8 @@ Built-in variables also available in templates:
 Example use in a template:
 
 ```
-{{- if .work }}
-# work-specific config
+{{- if eq .chezmoi.hostname "my-mac" }}
+# machine-specific config
 {{- end }}
 ```
 
@@ -196,11 +196,11 @@ Expected output: all checks green, zero failures.
 | E | Shell layer | 25 |
 | F | tmux | 10 |
 | G | Neovim | 21 |
-| H | Git + SSH | 21 |
+| H | Git tooling | 6 |
 | I | mise + uv | 21 |
 | J | CI + hygiene | 23 |
 | K | macOS defaults | 5 |
-| L | Advanced | 5 |
+| L | Advanced | 3 |
 | M | Documentation | 7 |
 | N | Final verification | 4 |
 

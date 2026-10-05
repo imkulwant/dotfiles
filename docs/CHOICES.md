@@ -79,20 +79,15 @@ IntelliJ.
 
 ---
 
-## Git pager: delta (side-by-side)
+## Git and SSH configs: unmanaged
 
-delta renders diffs with syntax highlighting and side-by-side layout.
-It is configured as `core.pager` in `.gitconfig` and also used in lazygit.
-`merge.conflictstyle = zdiff3` produces cleaner conflict markers.
-
----
-
-## GitHub transport: SSH only
-
-`.gitconfig` rewrites all `https://github.com/` URLs to `git@github.com:`.
-This means `git clone https://...` silently uses SSH, eliminating password
-prompts and HTTPS token management.
-The SSH key is stored in the macOS keychain via `~/.ssh/config`.
+`~/.gitconfig` and `~/.ssh/config` are not managed by chezmoi.
+Identity, keys, hosts, and transport (SSH vs HTTPS) differ per machine,
+especially on work laptops, and a managed copy overwrote local edits on every
+daily `chezmoi update`.
+Each machine keeps its own copies.
+delta is still installed and used by lazygit; set `core.pager = delta` in a
+machine's `~/.gitconfig` to use it for plain `git diff` too.
 
 ---
 
@@ -114,10 +109,11 @@ no recent apps.
 
 ---
 
-## Per-host data: work boolean
+## Per-host data: no setup prompts
 
-`.chezmoidata.yaml` exposes a `work` boolean (currently `false`).
-Templates can branch on `{{ if .work }}` without needing hostname logic.
+Setup asks no questions; there is no `.chezmoi.toml.tmpl`.
+A `work` flag and identity prompts existed earlier but nothing used them once
+git and SSH configs became per-machine.
 `.chezmoi.hostname` (built-in) handles machine-specific branching when needed.
 
 ---

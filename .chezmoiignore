@@ -19,8 +19,8 @@ templates
 .DS_Store
 **/.DS_Store
 
-# SSH: only ~/.ssh/config is tracked. Private keys, known_hosts, and the
-# agent socket must never enter the source tree.
+# SSH: nothing under ~/.ssh is tracked. These guards stop private keys,
+# known_hosts, and the agent socket from ever entering the source tree.
 .ssh/id_*
 .ssh/*.pub
 .ssh/known_hosts

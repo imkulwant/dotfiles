@@ -1,15 +1,8 @@
-# Template data for per-host and per-environment branching.
-# Usage in templates: {{ if .work }}...{{ end }}
-# Hostname available via built-in: {{ .chezmoi.hostname }} (e.g. "panzer.local")
-work: false
+# Template data shared by all .tmpl files.
+# For per-machine branching use the built-in {{ .chezmoi.hostname }} (e.g. "my-mac").
 perf:
   shell_budget_ms: 200
 ask:
   endpoint: ""
-ssh:
-  local_hosts:
-    caduceus:
-      host: 192.168.0.100
-      user: kulsin
 automation:
   weekly_maintenance: false

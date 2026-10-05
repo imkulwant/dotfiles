@@ -76,17 +76,11 @@ Neovim with LSP, treesitter, and harpoon2 for modal editing and quick file navig
 
 ## Git
 
-Version control with delta side-by-side diffs, SSH rewrite, and lazygit UI.
+Git tooling with lazygit and delta diffs. `~/.gitconfig` and `~/.ssh/config` are not managed; each machine keeps its own (see `docs/CHOICES.md`).
 
 | Name | What it is | Where to tweak |
 |---|---|---|
-| git | Distributed version control | `~/.gitconfig` |
-| git-delta | Side-by-side diff pager replacing less | `~/.gitconfig` — `[pager] diff = delta` |
-| SSH URL rewrite | Automatic `https://` → `git@` for github.com | `~/.gitconfig` — `[url "git@github.com:"]` |
-| zdiff3 | 3-way merge conflict marker style | `~/.gitconfig` — `[merge] conflictstyle = zdiff3` |
-| rerere | Automatic reuse of resolved conflicts | `~/.gitconfig` — `[rerere] enabled = true` |
-| pull.rebase | Rebase-based pulls by default | `~/.gitconfig` — `[pull] rebase = true` |
-| push.autoSetupRemote | Auto-set upstream on push | `~/.gitconfig` — `[push] autoSetupRemote = true` |
+| git-delta | Side-by-side diff pager | Used by lazygit; add `core.pager = delta` to `~/.gitconfig` to use it in plain git |
 | lazygit | Terminal Git UI with staging and commits | `~/.config/lazygit/config.yml` — delta pager integration |
 
 ---
@@ -172,7 +166,7 @@ Scheduled updates, pre-commit hooks, GitHub Actions CI, and install/uninstall sc
 | GitHub Actions CI | Lint and validate on every push | `.github/workflows/ci.yml` — shellcheck + `just doctor C` |
 | scripts/install.sh | Bootstrap or re-apply idempotently | Pre-flight checks (macOS version, Xcode CLT, network, disk), then chezmoi init/apply |
 | scripts/uninstall.sh | Safe destructive uninstall | Flags: `--yes --dry-run --no-backup --purge-brew --purge-data` |
-| just doctor | All-phases verification | Runs `scripts/doctor/run.sh` — 241 checks across phases A–R |
+| just doctor | All-phases verification | Runs `scripts/doctor/run.sh` — 275 checks across phases A–R |
 
 ---
 
