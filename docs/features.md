@@ -166,7 +166,7 @@ Scheduled updates, pre-commit hooks, GitHub Actions CI, and install/uninstall sc
 | GitHub Actions CI | Lint and validate on every push | `.github/workflows/ci.yml` — shellcheck + `just doctor C` |
 | scripts/install.sh | Bootstrap or re-apply idempotently | Pre-flight checks (macOS version, Xcode CLT, network, disk), then chezmoi init/apply |
 | scripts/uninstall.sh | Safe destructive uninstall | Flags: `--yes --dry-run --no-backup --purge-brew --purge-data` |
-| just doctor | All-phases verification | Runs `scripts/doctor/run.sh` — 275 checks across phases A–R |
+| just doctor | All-phases verification | Runs `scripts/doctor/run.sh` — 276 checks across phases A–R |
 
 ---
 

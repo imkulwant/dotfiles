@@ -50,7 +50,21 @@ check "VS Code settings.json references python3.13 (matches Brewfile)"
 assert_grep '/python3\.13' "$VSCODE_SETTINGS"
 
 # Sub-task 7 - chsh uses Homebrew zsh, not system /bin/zsh (SWOT bug 9)
-ENSURE_ZSH="$SOURCE/.chezmoiscripts/run_once_before_10_ensure_zsh.sh.tmpl"
+ENSURE_ZSH="$SOURCE/.chezmoiscripts/run_once_before_30_ensure_zsh.sh.tmpl"
+
+# chezmoi runs before-scripts in name order; anything calling brew must sort
+# after the Homebrew installer or a fresh Mac aborts on "brew: not found".
+check "before-scripts that call brew sort after install_homebrew"
+_misordered=""
+for f in "$SOURCE/.chezmoiscripts"/run_once_before_*.sh.tmpl; do
+  _name=$(basename "$f")
+  case "$_name" in *install_homebrew*) continue ;; esac
+  if grep -qE '(^|[^/])brew (install|bundle)' "$f" &&
+    [[ "$_name" < "run_once_before_20_install_homebrew.sh.tmpl" ]]; then
+    _misordered="$_misordered $_name"
+  fi
+done
+if [ -z "$_misordered" ]; then pass; else fail "runs before Homebrew:$_misordered"; fi
 
 check "ensure_zsh script targets /opt/homebrew/bin/zsh"
 assert_grep '/opt/homebrew/bin/zsh' "$ENSURE_ZSH"

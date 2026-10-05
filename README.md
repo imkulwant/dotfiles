@@ -16,11 +16,13 @@ curl -fsSL https://raw.githubusercontent.com/imkulwant/dotfiles/main/scripts/ins
 
 That single command:
 
-1. Downloads and installs the `chezmoi` binary into `~/.local/bin`.
-2. Clones this repo to `~/.local/share/chezmoi`.
-3. Runs all `run_once_before_*` scripts (Homebrew, zsh, chezmoi itself).
-4. Applies all managed files to `$HOME`.
-5. Runs `run_onchange_*` scripts (Brewfile install, macOS defaults, launchd agent).
+1. Installs Homebrew if missing and puts it on PATH for the rest of the run.
+2. Downloads and installs the `chezmoi` binary into `~/.local/bin`.
+3. Clones this repo to `~/.local/share/chezmoi`.
+4. Runs all `run_once_before_*` scripts in name order (Homebrew, zsh, chezmoi itself).
+5. Applies all managed files to `$HOME`.
+6. Runs `run_onchange_*` scripts (Brewfile install, macOS defaults, launchd agent).
+7. Runs `just doctor` and reports failures without aborting.
 
 The install script includes pre-flight checks (macOS version, Xcode CLT, network, disk space)
 and is idempotent: running it again on an already-installed system applies any new changes.
@@ -56,8 +58,8 @@ Full chezmoi command reference: [`docs/chezmoi-cheatsheet.md`](docs/chezmoi-chea
 ├── Brewfile                     # all formulae, casks, fonts, VS Code extensions
 │
 ├── .chezmoiscripts/             # scripts chezmoi runs automatically
-│   ├── run_once_before_10_ensure_zsh.sh.tmpl
 │   ├── run_once_before_20_install_homebrew.sh.tmpl
+│   ├── run_once_before_30_ensure_zsh.sh.tmpl
 │   ├── run_once_before_70_install_chezmoi.sh.tmpl
 │   ├── run_onchange_install-brewfile.sh.tmpl
 │   ├── run_onchange_macos_defaults.sh.tmpl
@@ -113,8 +115,8 @@ Design rationale for each major choice: [`docs/CHOICES.md`](docs/CHOICES.md).
 
 | Script | What it does |
 |---|---|
-| `10_ensure_zsh.sh` | Registers Homebrew zsh in `/etc/shells`, sets it as login shell |
 | `20_install_homebrew.sh` | Installs Homebrew if missing |
+| `30_ensure_zsh.sh` | Registers Homebrew zsh in `/etc/shells`, sets it as login shell |
 | `70_install_chezmoi.sh` | Ensures chezmoi binary is in place |
 
 ### `run_onchange_*` — re-run whenever their content changes

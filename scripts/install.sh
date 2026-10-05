@@ -4,6 +4,18 @@ set -euo pipefail
 # Polished install wrapper around chezmoi's one-liner bootstrap.
 # Provides pre-flight checks and idempotent re-run semantics.
 
+# Under `curl | bash` this script arrives on stdin, so any child that reads
+# stdin would swallow the rest of it. Give interactive children the terminal.
+from_tty() {
+  if [ -t 0 ]; then
+    "$@"
+  elif (: </dev/tty) 2>/dev/null; then
+    "$@" </dev/tty
+  else
+    "$@" </dev/null
+  fi
+}
+
 # 1. Platform check
 if [[ "$(uname -s)" != "Darwin" ]]; then
   echo "This installer targets macOS. Detected: $(uname -s)." >&2
@@ -50,19 +62,34 @@ if ((free_kb < 2000000)); then
   exit 1
 fi
 
-# 5. Idempotent branch: existing install → apply; fresh → bootstrap
+# 5. Homebrew: install if missing, then put it on PATH for everything below
+#    (chezmoi, its scripts, and template lookPath calls inherit this env).
+if ! command -v brew >/dev/null 2>&1 && [ ! -x /opt/homebrew/bin/brew ]; then
+  echo "Installing Homebrew..."
+  from_tty /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+if ! command -v brew >/dev/null 2>&1 && [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+export PATH="$HOME/.local/bin:$PATH"
+
+# 6. Idempotent branch: existing install → apply; fresh → bootstrap
 if [ -d "$HOME/.local/share/chezmoi" ]; then
   echo "chezmoi source present at $HOME/.local/share/chezmoi. Running apply..."
-  chezmoi apply
+  from_tty chezmoi apply
 else
   echo "Bootstrapping chezmoi..."
-  sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply imkulwant
+  from_tty sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin" init --apply imkulwant
 fi
 
-# 6. Final verification
-echo "Running doctor..."
+# 7. Final verification (non-fatal). Pass --justfile explicitly: the caller's
+#    cwd has no justfile, and recipes resolve paths relative to it.
 if command -v just >/dev/null 2>&1; then
-  just doctor || true
+  echo "Running doctor..."
+  just --justfile "$HOME/.local/share/chezmoi/justfile" doctor ||
+    echo "doctor reported failures (see above); the install itself completed." >&2
+else
+  echo "skipping doctor: 'just' not found on PATH." >&2
 fi
 
 echo
