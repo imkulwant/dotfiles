@@ -46,14 +46,14 @@ eval "$(atuin init zsh)"
 # ── mise: lazy-load on first use (saves ~100ms at shell start) ───────────────
 # The real activation replaces these stubs on first invocation. Aliases are
 # re-sourced after activation so user aliases (e.g. python=python3) survive.
-_mise_lazy_activate() {
+mise_lazy_activate() {
   unset -f mise node npm npx python python3 pip pip3 ruby go rustc cargo java 2>/dev/null
   eval "$(command mise activate zsh)"
   [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 }
 for _cmd in mise node npm npx python python3 pip pip3 ruby go rustc cargo java; do
   unalias "$_cmd" 2>/dev/null
-  eval "$_cmd() { _mise_lazy_activate; $_cmd \"\$@\"; }"
+  eval "$_cmd() { mise_lazy_activate; $_cmd \"\$@\"; }"
 done
 unset _cmd
 
