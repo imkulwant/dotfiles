@@ -1,92 +1,59 @@
 # ── Shell & terminal ─────────────────────────────────────────────────────────
-brew "zsh"
-brew "fzf"
-brew "starship"
-brew "zoxide"
-brew "atuin"
-brew "direnv"
+brew "zsh"                      # Current Z shell; newer than the macOS system zsh
+brew "fzf"                      # Fuzzy finder for files, history, and Ctrl-R/Ctrl-T pickers
+brew "starship"                 # Fast, cross-shell prompt with git/language context
+brew "zoxide"                   # Smarter `cd` that jumps to frequently used directories
+brew "atuin"                    # Searchable shell history stored in SQLite
+brew "direnv"                   # Loads/unloads per-directory env vars from .envrc
 
 # ── File & search tools ───────────────────────────────────────────────────────
-brew "ripgrep"
-brew "fd"
-brew "bat"
-brew "eza"
+brew "ripgrep"                  # `rg`: very fast recursive grep that respects .gitignore
+brew "fd"                       # Simple, fast alternative to `find`
+brew "bat"                      # `cat` with syntax highlighting and git markers
+brew "eza"                      # Modern `ls` with colors, icons, git status, tree view
 
 # ── Git & code review ─────────────────────────────────────────────────────────
-brew "git-delta"
-brew "lazygit"
-brew "gh"
+brew "git-delta"                # Syntax-highlighted pager for git diffs
+brew "lazygit"                  # Terminal UI for staging, committing, rebasing
+brew "gh"                       # GitHub CLI for PRs, issues, and repos
 
 # ── Editor & multiplexer ──────────────────────────────────────────────────────
-brew "neovim"
-brew "tmux"
+brew "neovim"                   # Modern Vim-based terminal editor
+brew "tmux"                     # Terminal multiplexer: persistent sessions, splits, windows
 
 # ── Task runner & toolchain management ───────────────────────────────────────
-brew "just"
-brew "mise"
-brew "uv"
+brew "just"                     # Command runner for project recipes (justfile)
+brew "mise"                     # Runtime version manager (Java, Node, etc.) and env tool
+brew "uv"                       # Fast Python package and project manager
 
 # ── CI & code quality ─────────────────────────────────────────────────────────
-brew "hyperfine"
-brew "shellcheck"
-brew "shfmt"
-brew "pre-commit"
+brew "hyperfine"                # Command-line benchmarking tool
+brew "shellcheck"               # Static analysis/linter for shell scripts
+brew "shfmt"                    # Formatter for shell scripts
+brew "pre-commit"               # Runs configured git hooks (linters/formatters) on commit
 
 # ── Data & infra tools ───────────────────────────────────────────────────────
-brew "tree-sitter-cli"
-brew "jq"
-brew "yq"
-brew "btop"
-brew "tldr"
-brew "dust"
-brew "k9s"
-brew "chezmoi"
+brew "tree-sitter-cli"          # Builds tree-sitter parsers; used by Neovim treesitter
+brew "jq"                       # Query and transform JSON on the command line
+brew "yq"                       # jq-style processor for YAML (also JSON/XML/TOML)
+brew "btop"                     # Interactive resource monitor (CPU, memory, disk, network)
+brew "tldr"                     # Short, example-driven man pages
+brew "dust"                     # Visual disk-usage breakdown, a friendlier `du`
+brew "k9s"                      # Terminal UI for managing Kubernetes clusters
+brew "chezmoi"                  # Dotfiles manager that applies this repo
 
 # ── Java & build tools (managed by mise) ─────────────────────────────────────
-brew "maven"
+brew "maven"                    # Java build and dependency management tool
 
 # ── Python ────────────────────────────────────────────────────────────────────
-brew "python@3.13"
+brew "python@3.13"              # Python 3.13 interpreter (Homebrew-managed)
 
 # ── Casks ─────────────────────────────────────────────────────────────────────
-cask "firefox"
-cask "font-meslo-lg-nerd-font"
-cask "gcloud-cli"
-cask "intellij-idea"
-cask "iterm2"
-cask "postman"
-cask "visual-studio-code"
+cask "font-meslo-lg-nerd-font"  # Meslo Nerd Font with icon glyphs for prompt/eza/nvim
+cask "iterm2"                   # Feature-rich macOS terminal emulator
+cask "visual-studio-code"       # VS Code editor
 
 # ── VS Code extensions ────────────────────────────────────────────────────────
-# Python & Django Development
-vscode "batisteo.vscode-django"
-vscode "donjayamanne.python-environment-manager"
-vscode "donjayamanne.python-extension-pack"
-vscode "ms-python.debugpy"
-vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"
-vscode "ms-python.vscode-python-envs"
-vscode "kevinrose.vsc-python-indent"
-vscode "njpwerner.autodocstring"
-
 # Template & Data Formats
-vscode "wholroyd.jinja"
-vscode "mechatroner.rainbow-csv"
-
-# Java & Java Build Tools
-vscode "redhat.java"
-vscode "vscjava.vscode-java-pack"
-vscode "vscjava.vscode-java-debug"
-vscode "vscjava.vscode-java-dependency"
-vscode "vscjava.vscode-java-test"
-vscode "vscjava.vscode-maven"
-vscode "vscjava.vscode-gradle"
-
-# Source Control & Code Quality
-vscode "eamodio.gitlens"
-vscode "sonarsource.sonarlint-vscode"
-
-# Productivity & Formatting Tools
-vscode "esbenp.prettier-vscode"
-vscode "visualstudioexptteam.vscodeintellicode"
-vscode "visualstudioexptteam.intellicode-api-usage-examples"
+vscode "wholroyd.jinja"           # Jinja template syntax highlighting
+vscode "mechatroner.rainbow-csv"  # Colors CSV/TSV columns and adds CSV querying
