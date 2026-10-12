@@ -114,14 +114,14 @@ File listing, searching, fuzzing, and general-purpose command-line utilities.
 
 ## Language toolchains
 
-Java via mise, Python via uv and Homebrew python@3.13, with templates for new projects.
+Java and Python via mise, Python packages via uv, with templates for new projects.
 
 | Name | What it is | Where to tweak |
 |---|---|---|
-| mise | Polyglot runtime manager (Java, node, ruby, etc.) | `~/.config/mise/config.toml` — also lazy-loaded from `.zshrc` |
-| Temurin 21 (Java) | OpenJDK 21 via mise | `~/.config/mise/config.toml` — installed to `~/.local/share/mise/installs/java/temurin-21` |
+| mise | Polyglot runtime manager (Java, Python, node, etc.) | `dot_config/mise/config.toml` (→ `~/.config/mise/config.toml`) — also lazy-loaded from `.zshrc` |
+| Temurin 25 (Java) | OpenJDK 25 via mise | `dot_config/mise/config.toml` — installed to `~/.local/share/mise/installs/java/temurin-25` |
+| Python 3.13 | Global Python interpreter via mise | `dot_config/mise/config.toml` — installed to `~/.local/share/mise/installs/python/3.13` |
 | uv | Fast Python package manager and project builder | `~/.local/share/chezmoi/templates/.envrc` — configure per-project |
-| python@3.13 | System Python from Homebrew | Installed via Homebrew; available in PATH |
 | templates/.mise.toml | Starter template for new projects | Copy to project root for mise config |
 | templates/.envrc | Starter template for new projects | Copy to project root for direnv + uv |
 
@@ -172,14 +172,11 @@ Scheduled updates, pre-commit hooks, GitHub Actions CI, and install/uninstall sc
 
 ## VS Code
 
-VS Code settings with Java language support and Python/Django extensions.
+VS Code settings and a small set of extensions.
 
 | Name | What it is | Where to tweak |
 |---|---|---|
 | VS Code | Microsoft code editor | `~/Library/Application Support/Code/User/settings.json.tmpl` |
-| Java language support | Redhat Java extension + build/debug tools | Settings point `java.jdt.ls.java.home` to `{{ .chezmoi.homeDir }}/.local/share/mise/installs/java/temurin-21` |
-| Python extensions | Django, Python, Pylance, debugpy, envs | Installed via Brewfile (VS Code extensions) |
-| Java extensions | Java Pack, Maven, Gradle, test runner | Installed via Brewfile (VS Code extensions) |
-| Other extensions | GitLens, SonarLint, Prettier, IntelliCode | Installed via Brewfile (VS Code extensions) |
+| Extensions | Jinja syntax highlighting, Rainbow CSV | Installed via Brewfile (VS Code extensions) |
 
 ---

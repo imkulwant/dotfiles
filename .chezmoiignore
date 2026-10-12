@@ -29,7 +29,7 @@ templates
 .ssh/agent/**
 
 # mise tool installs — managed by mise, never tracked by chezmoi.
-# Only ~/.config/mise/config.toml belongs in chezmoi (added in Phase L).
+# Only ~/.config/mise/config.toml (dot_config/mise/config.toml) is tracked.
 .local/share/mise
 .local/share/mise/**
 

@@ -44,11 +44,11 @@ Sync is not enabled — history stays local.
 
 ---
 
-## Java toolchain: mise + Temurin 21 (replaced jenv + Homebrew openjdk@21)
+## Java toolchain: mise + Temurin 25 (replaced jenv + Homebrew openjdk@21)
 
 jenv is a shim manager that requires manual `jenv add` calls every time a JDK
 is installed, and it does not install JDKs itself.
-mise installs and activates `java@temurin-21` in one step, exports
+mise installs and activates `java@temurin-25` in one step, exports
 `JAVA_HOME` automatically, and is the same tool already used for other
 runtimes (Node, Python).
 Three dead chezmoi scripts (install_jenv_plugins, add_java_to_jenv,
@@ -56,14 +56,14 @@ install_fzf) were deleted as a side effect of this migration.
 
 ---
 
-## Python toolchain: uv (replaced pyenv + pipx)
+## Python toolchain: mise + uv (replaced pyenv + pipx + Homebrew python@3.13)
 
 pyenv adds startup overhead and requires `pyenv rehash` discipline.
 pipx is a separate tool with its own venvs.
-uv handles both: `uv python install` manages interpreters, `uv tool install`
-manages CLI tools, and `uv run` executes scripts without explicit venv
-activation.
-Python is also available via Homebrew for system-level tools.
+uv handles both: `uv tool install` manages CLI tools, and `uv run` executes
+scripts without explicit venv activation.
+The global Python 3.13 interpreter comes from mise, the same tool that
+manages Java, instead of Homebrew's python@3.13.
 
 ---
 

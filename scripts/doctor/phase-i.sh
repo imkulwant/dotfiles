@@ -9,14 +9,23 @@ SOURCE="$CHEZMOI_SOURCE"
 check "mise installed"
 assert_cmd_ok "mise --version"
 
-check "mise has global java temurin-21"
-assert_cmd_out "mise ls java" "temurin-21"
+check "global mise config is managed by chezmoi"
+assert_file "$SOURCE/dot_config/mise/config.toml"
+
+check "mise has global java temurin-25"
+assert_cmd_out "mise ls java" "temurin-25"
 
 check "mise-managed java on PATH (interactive shell)"
-assert_cmd_out "zsh -i -c 'java -version 2>&1'" "21\."
+assert_cmd_out "zsh -i -c 'java -version 2>&1'" "25\."
 
 check "mise-managed java binary path contains mise/installs"
 assert_cmd_out "mise which java" "mise/installs/java"
+
+check "mise has global python 3.13"
+assert_cmd_out "mise ls python" "3\.13"
+
+check "mise-managed python binary path contains mise/installs"
+assert_cmd_out "mise which python3" "mise/installs/python"
 
 # ── uv ───────────────────────────────────────────────────────────────────────
 check "uv installed"
@@ -56,11 +65,11 @@ assert_no_grep '^brew "pipx"' "$SOURCE/Brewfile"
 check "Brewfile no longer declares openjdk@21"
 assert_no_grep '^brew "openjdk@21"' "$SOURCE/Brewfile"
 
+check "Brewfile no longer declares python@3.13 (mise manages Python)"
+assert_no_grep '^brew "python@' "$SOURCE/Brewfile"
+
 # ── VS Code settings ──────────────────────────────────────────────────────────
 _vscode_settings="$SOURCE/private_Library/private_Application Support/private_Code/User/settings.json.tmpl"
-
-check "VS Code settings.json points Java runtime at mise/installs"
-assert_grep 'mise/installs' "$_vscode_settings"
 
 check "VS Code settings.json no longer references Homebrew openjdk@21 path"
 assert_no_grep 'openjdk@21' "$_vscode_settings"

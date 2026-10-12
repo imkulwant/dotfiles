@@ -45,9 +45,6 @@ brew "chezmoi"                  # Dotfiles manager that applies this repo
 # ── Java & build tools (managed by mise) ─────────────────────────────────────
 brew "maven"                    # Java build and dependency management tool
 
-# ── Python ────────────────────────────────────────────────────────────────────
-brew "python@3.13"              # Python 3.13 interpreter (Homebrew-managed)
-
 # ── Casks ─────────────────────────────────────────────────────────────────────
 cask "font-meslo-lg-nerd-font"  # Meslo Nerd Font with icon glyphs for prompt/eza/nvim
 cask "iterm2"                   # Feature-rich macOS terminal emulator

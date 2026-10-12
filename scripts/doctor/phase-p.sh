@@ -15,10 +15,6 @@ check "VS Code settings.json is now a template"
 assert_file "$SOURCE/private_Library/private_Application Support/private_Code/User/settings.json.tmpl"
 assert_no_file "$SOURCE/private_Library/private_Application Support/private_Code/User/settings.json"
 
-check "VS Code Java path uses chezmoi.homeDir"
-assert_grep '\{\{ \.chezmoi\.homeDir \}\}/.local/share/mise/installs/java/temurin-21' \
-  "$SOURCE/private_Library/private_Application Support/private_Code/User/settings.json.tmpl"
-
 check "chezmoi-update plist renamed to local.chezmoi-update"
 assert_file "$SOURCE/private_Library/LaunchAgents/local.chezmoi-update.plist.tmpl"
 assert_no_file "$SOURCE/private_Library/LaunchAgents/com.kulsin.chezmoi-update.plist.tmpl"
