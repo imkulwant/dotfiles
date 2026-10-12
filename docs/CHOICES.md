@@ -135,6 +135,9 @@ Two jobs on every push:
   `just doctor C`, formula-drift-check.
 
 pre-commit runs the same lint hooks locally before each commit.
+It is installed by mise (`pypi:pre-commit`), not Homebrew, so no Homebrew
+Python is needed; `just upgrade-all` reinstalls the git hook after
+`mise upgrade` because the hook pins the installed version's interpreter.
 `formula-drift-check.sh` asserts every `/opt/homebrew/opt/<formula>` reference
 in source files is declared in the Brewfile.
 

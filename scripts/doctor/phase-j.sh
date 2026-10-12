@@ -21,11 +21,17 @@ assert_grep 'trailing-whitespace' "$SOURCE/.pre-commit-config.yaml"
 check ".pre-commit config includes check-merge-conflict"
 assert_grep 'check-merge-conflict' "$SOURCE/.pre-commit-config.yaml"
 
-check "pre-commit installed"
-assert_cmd_ok "pre-commit --version"
+check "pre-commit installed via mise"
+assert_cmd_out "mise which pre-commit" "mise/installs/pypi-pre-commit"
 
 check "pre-commit hook registered in .git/hooks"
 assert_file "$SOURCE/.git/hooks/pre-commit"
+
+# The hook pins the interpreter path of the pre-commit install that wrote it;
+# `mise upgrade` can remove that version, so `just upgrade-all` reinstalls it.
+check "pre-commit hook interpreter exists"
+_hook_python=$(sed -n 's/^INSTALL_PYTHON=//p' "$SOURCE/.git/hooks/pre-commit" 2>/dev/null)
+if [ -x "$_hook_python" ]; then pass; else fail "missing ${_hook_python:-INSTALL_PYTHON} — run: mise exec -- pre-commit install"; fi
 
 # ── GitHub Actions ────────────────────────────────────────────────────────────
 check "GitHub Actions CI workflow exists"
@@ -70,7 +76,7 @@ assert_cmd_ok "shellcheck --version"
 check "shfmt installed"
 assert_cmd_ok "shfmt --version"
 
-check "pre-commit installed"
-assert_cmd_ok "pre-commit --version"
+check "pre-commit installed via mise"
+assert_cmd_out "mise which pre-commit" "mise/installs/pypi-pre-commit"
 
 phase_end

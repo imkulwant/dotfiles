@@ -12,6 +12,7 @@ uninstall *args='':
 upgrade-all:
     brew update && brew upgrade && brew cleanup
     mise upgrade
+    mise exec -- pre-commit install
     chezmoi update
 
 # Rotate atuin history DB snapshot (keeps 8 newest in ~/Library/Backups/atuin/).

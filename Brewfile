@@ -30,7 +30,6 @@ brew "uv"                       # Fast Python package and project manager
 brew "hyperfine"                # Command-line benchmarking tool
 brew "shellcheck"               # Static analysis/linter for shell scripts
 brew "shfmt"                    # Formatter for shell scripts
-brew "pre-commit"               # Runs configured git hooks (linters/formatters) on commit
 
 # ── Data & infra tools ───────────────────────────────────────────────────────
 brew "tree-sitter-cli"          # Builds tree-sitter parsers; used by Neovim treesitter

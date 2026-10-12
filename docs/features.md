@@ -121,6 +121,7 @@ Java and Python via mise, Python packages via uv, with templates for new project
 | mise | Polyglot runtime manager (Java, Python, node, etc.) | `dot_config/mise/config.toml` (→ `~/.config/mise/config.toml`) — also lazy-loaded from `.zshrc` |
 | Temurin 25 (Java) | OpenJDK 25 via mise | `dot_config/mise/config.toml` — installed to `~/.local/share/mise/installs/java/temurin-25` |
 | Python 3.13 | Global Python interpreter via mise | `dot_config/mise/config.toml` — installed to `~/.local/share/mise/installs/python/3.13` |
+| pre-commit, podman-compose | Python CLI tools via mise's `pypi:` backend (uv under the hood) | `dot_config/mise/config.toml` |
 | uv | Fast Python package manager and project builder | `~/.local/share/chezmoi/templates/.envrc` — configure per-project |
 | templates/.mise.toml | Starter template for new projects | Copy to project root for mise config |
 | templates/.envrc | Starter template for new projects | Copy to project root for direnv + uv |
@@ -160,7 +161,7 @@ Scheduled updates, pre-commit hooks, GitHub Actions CI, and install/uninstall sc
 | Name | What it is | Where to tweak |
 |---|---|---|
 | local.chezmoi-update (launchd) | Daily auto-update at 09:00 | `~/Library/LaunchAgents/local.chezmoi-update.plist` — loads via `.chezmoiscripts/run_onchange_load_chezmoi_launchd.sh.tmpl` |
-| pre-commit | Framework for git hooks | `~/.pre-commit-config.yaml` — shellcheck, shfmt, trailing-whitespace, large-files, merge-conflict |
+| pre-commit | Framework for git hooks, installed via mise | `.pre-commit-config.yaml` in this repo — shellcheck, shfmt, trailing-whitespace, large-files, merge-conflict |
 | shellcheck | Shell script linter | Runs via pre-commit; catches common bash/zsh mistakes |
 | shfmt | Shell script formatter | Runs via pre-commit; enforces consistent style |
 | GitHub Actions CI | Lint and validate on every push | `.github/workflows/ci.yml` — shellcheck + `just doctor C` |

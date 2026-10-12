@@ -1,3 +1,5 @@
 [tools]
 java = "temurin-25"
 python = "3.13"
+"pypi:pre-commit" = "latest"
+"pypi:podman-compose" = "latest"
