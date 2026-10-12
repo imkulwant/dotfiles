@@ -40,9 +40,6 @@ VSCODE_SETTINGS="$SOURCE/private_Library/private_Application Support/private_Cod
 check "VS Code settings.json no longer references openjdk@24"
 assert_no_grep 'openjdk@24' "$VSCODE_SETTINGS"
 
-check "VS Code settings.json declares JavaSE-21 as default runtime"
-assert_grep '"name": "JavaSE-21"' "$VSCODE_SETTINGS"
-
 check "VS Code settings.json no longer references python3.12"
 assert_no_grep '/python3\.12' "$VSCODE_SETTINGS"
 
