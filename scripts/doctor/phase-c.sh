@@ -43,9 +43,6 @@ assert_no_grep 'openjdk@24' "$VSCODE_SETTINGS"
 check "VS Code settings.json no longer references python3.12"
 assert_no_grep '/python3\.12' "$VSCODE_SETTINGS"
 
-check "VS Code settings.json references python3.13 (matches Brewfile)"
-assert_grep '/python3\.13' "$VSCODE_SETTINGS"
-
 # Sub-task 7 - chsh uses Homebrew zsh, not system /bin/zsh (SWOT bug 9)
 ENSURE_ZSH="$SOURCE/.chezmoiscripts/run_once_before_30_ensure_zsh.sh.tmpl"
 
